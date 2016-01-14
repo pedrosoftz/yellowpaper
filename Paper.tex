@@ -37,11 +37,13 @@
 \newcommand*\ie{i.e.\@\xspace}
 %\renewcommand{\itemhook}{\setlength{\topsep}{0pt}  \setlength{\itemsep}{0pt}\setlength{\leftmargin}{15pt}}
 
-\title{Ethereum: A Secure Decentralised Generalised Transaction Ledger \\ {\smaller \textbf{Final Draft - UNDER REVIEW}}}
+\title{Ethereum: Un Registro Generico delle Transazioni Sicuro e Decentralizzato \\ {\smaller \textbf{Final Draft - UNDER REVIEW}}}
 \author{
     Dr. Gavin Wood\\
     Co-Founder \& Lead, Ethereum Project\\
-    gavin@ethereum.org
+    gavin@ethereum.org\\
+    Tradotto dal Dr. Leonardo Maria Pedretti\\
+    Founder \& Lead, Ethereum Project Italia\\
 }
 \begin{document}
 
@@ -49,9 +51,9 @@
 %\pagecolor{lightpink}
 
 \begin{abstract}
-The blockchain paradigm when coupled with cryptographically-secured transactions has demonstrated its utility through a number of projects, not least Bitcoin. Each such project can be seen as a simple application on a decentralised, but singleton, compute resource. We can call this paradigm a transactional singleton machine with shared-state.
+Il paradigma blockchain, quando associato alle transazioni rese sicure dalla crittografia, ha dimostrato la propria utilità attraverso diversi progetti, non da ultimo il Bitcoin. Ognuno di questi può essere visto come una semplice applicazione su una decentralizzata, ma con un solo fine, risorsa di calcolo. Possiamo definire questo paradigma come una macchina con un unico scopo ma con uno stato condiviso.
 
-Ethereum implements this paradigm in a generalised manner. Furthermore it provides a plurality of such resources, each with a distinct state and operating code but able to interact through a message-passing framework with others. We discuss its design, implementation issues, the opportunities it provides and the future hurdles we envisage.
+Ethereum implementa questo paradigma con un un ecosistema generico. Inoltre fornisce una plurità di dette risorse, ognuna con uno stato e con un codice operativo distinto, ma capace di interagire con gli altri attraverso un framework che consente la comunicazione per mezzo di messaggi fra questi. Abbiamo discusso sul proprio design, le problematiche dell'implementazione, le opportunità che fornisce e gli ostacoli futuri che prevediamo.
 \end{abstract}
 
 \maketitle
@@ -61,9 +63,9 @@ Ethereum implements this paradigm in a generalised manner. Furthermore it provid
 
 \section{Introduction}\label{sec:introduction}
 
-With ubiquitous internet connections in most places of the world, global information transmission has become incredibly cheap. Technology-rooted movements like Bitcoin have demonstrated, through the power of the default, consensus mechanisms and voluntary respect of the social contract that it is possible to use the internet to make a decentralised value-transfer system, shared across the world and virtually free to use. This system can be said to be a very specialised version of a cryptographically secure, transaction-based state machine. Follow-up systems such as Namecoin adapted this original ``currency application'' of the technology into other applications albeit rather simplistic ones.
+Con la diffusione capillare di internet in molti posti del mondo, la trasmissione di informazioni è divenuta incredibilmente economica. I movimenti fondati sulla tecnologia come il Bitcoin hanno dimostrato, attraverso la forza del predefinito meccanismo di consenso e del rispetto volontario del contratto sociale, come sia possibile utilizzare internet per creare uno sistema decentralizzato di scambio di valore, condiviso attraverso il mondo e virtualmente libero da utilizzare. Questo sistema può essere definito come una versione molto specializzata di una, crittograficamente sicura, macchina di stato basata sulla transazione. I successivi sistemi come il Namecoin hanno adattato questa originale ``applicazione monetica'' della tecnologia in altre in maniera piuttosto semplicistica.
 
-Ethereum is a project which attempts to build the generalised technology; technology on which all transaction-based state machine concepts may be built. Moreover it aims to provide to the end-developer a tightly integrated end-to-end system for building software on a hitherto unexplored compute paradigm in the mainstream: a trustful object messaging compute framework.
+Ethereum è un progetto che tenta di costuire una tecnologia generalizzata; dove tutte le idee basate sulla macchina di transizione di stato possono essere costruite. Moreover it aims to provide to the end-developer a tightly integrated end-to-end system for building software on a hitherto unexplored compute paradigm in the mainstream: a trustful object messaging compute framework.
 
 \subsection{Driving Factors} \label{ch:driving}
 
