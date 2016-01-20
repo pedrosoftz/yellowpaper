@@ -137,15 +137,15 @@ Attraverso il presente lavoro, qualsiasi riferimento al valore, nel contesto di 
 
 \subsection{Which History?}
 
-Since the system is decentralised and all parties have an opportunity to create a new block on some older pre-existing block, the resultant structure is necessarily a tree of blocks. In order to form a consensus as to which path, from root (the genesis block) to leaf (the block containing the most recent transactions) through this tree structure, known as the blockchain, there must be an agreed-upon scheme. If there is ever a disagreement between nodes as to which root-to-leaf path down the block tree is the `best' blockchain, then a \textit{fork} occurs.
+Dato che il sistema è decentralizzato e tutte le parti hanno un'opportunità di creare un nuovo blocco su qualche blocco più vecchio preestinte, la struttura risultante è necessariamente un "albero" di blocchi. Affinchè si formi un consenso su quale percorso, dalla radice (il blocco di genesi) fino alla foglia (il blocco che contiene le transazioni più recenti) attraverso questa struttura ad albero, conosciuto come blockchain, ci deve essere uno schema su cui ci sia un accordo. Se ci fosse mai un disaccordo tra i nodi su quale percorso, dalla radice alla foglia attraverso l'albero dei blocchi, sia la `migliore' blockchain, ciò comporterebbe \textit{fork} .
 
-This would mean that past a given point in time (block), multiple states of the system may coexist: some nodes believing one block to contain the canonical transactions, other nodes believing some other block to be canonical, potentially containing radically different or incompatible transactions. This is to be avoided at all costs as the uncertainty that would ensue would likely kill all confidence in the entire system.
+Questo significherebbe che nel passato rispetto ad un punto dato (blocco), potrebbero coesistere molteplici stati del sistema: qualche nodo potrebbe credere che un blocco contenga le canoniche transazioni, altri nodi invece che siano leggittimi altri blocchi, contenenti potenzialmente transazioni radicalmente differenti od incompatibili. Questo deve essere evitato a tutti i costi e l'invertezza che ne deriberebbe potrebbe probabilmente deteriore tutta la fiducia nell'intero sistema.
 
-The scheme we use in order to generate consensus is a simplified version of the GHOST protocol introduced by \cite{cryptoeprint:2013:881}. This process is described in detail in section \ref{ch:ghost}.
+Lo schema che utilizziamo in ordine di generare consenso è una versione semplificata del protoccolo GHOST introdotto da \cite{cryptoeprint:2013:881}. Questo processo è descritto in dettaglio nella sezione \ref{ch:ghost}.
 
 \section{Conventions}\label{ch:conventions}
 
-I use a number of typographical conventions for the formal notation, some of which are quite particular to the present work:
+Uso un numero di convenzioni tipografiche per la notazione formale, qualcuna delle quali è piuttosto presente nel presente scritto:
 
 The two sets of highly structured, `top-level', state values, are denoted with bold lowercase Greek letters. They fall into those of world-state, which are denoted $\boldsymbol{\sigma}$ (or a variant thereupon) and those of machine-state, $\boldsymbol{\mu}$.
 
