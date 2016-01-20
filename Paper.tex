@@ -198,34 +198,34 @@ Dato che solitamente mi augro di riferirmi non all'hash della radice della strut
 \texttt{\small TRIE}\big(L_I^*(\boldsymbol{\sigma}[a]_\mathbf{s})\big) \equiv \boldsymbol{\sigma}[a]_s
 \end{equation}
 
-The collapse function for the set of key/value pairs in the trie, $L_I^*$, is defined as the element-wise transformation of the base function $L_I$, given as:
+La funzione di crollo per il set delle coppie chiave/valore nella struttura, $L_I^*$, è definita come la trasformazione elemento per elemento della funzione di base $L_I$, data come:
 \begin{equation}
 L_I\big( (k, v) \big) \equiv \big(\texttt{\small KEC}(k), \texttt{\small RLP}(v)\big)
 \end{equation}
 
-where:
+dove:
 \begin{equation}
 k \in \mathbb{B}_{32} \quad \wedge \quad v \in \mathbb{P}
 \end{equation}
 
-It shall be understood that $\boldsymbol{\sigma}[a]_\mathbf{s}$ is not a `physical' member of the account and does not contribute to its later serialisation.
+Sarà compreso che $\boldsymbol{\sigma}[a]_\mathbf{s}$ non è il membro `fisico' dell'account e non contribuisce alla propria serializzazione successiva.
 
-If the \textbf{codeHash} field is the Keccak-256 hash of the empty string, i.e. $\boldsymbol{\sigma}[a]_c = \texttt{\small KEC}\big(()\big)$, then the node represents a simple account, sometimes referred to as a ``non-contract'' account.
+Se il \textbf{codeHash} campo è l'hash Keccak-256 della stringa vuota, ad es. $\boldsymbol{\sigma}[a]_c = \texttt{\small KEC}\big(()\big)$, quindi il nodo rappresenta un semplice account, qualche volta riferito come un account ``non-contratto''.
 
-Thus we may define a world-state collapse function $L_S$:
+Perciò possiamo definire una funzione di collasso dello stato globale $L_S$:
 \begin{equation}
 L_S(\boldsymbol{\sigma}) \equiv \{ p(a): \boldsymbol{\sigma}[a] \neq \varnothing \}
 \end{equation}
-where
+dove
 \begin{equation}
 p(a) \equiv  \big(\texttt{\small KEC}(a), \texttt{\small RLP}\big( (\boldsymbol{\sigma}[a]_n, \boldsymbol{\sigma}[a]_b, \boldsymbol{\sigma}[a]_s, \boldsymbol{\sigma}[a]_c) \big) \big)
 \end{equation}
 
-This function, $L_S$, is used alongside the trie function to provide a short identity (hash) of the world state. We assume:
+Questa funzione, $L_S$, viene utilizzata insieme alla funzione di struttura per fornire una breve identità (hash) dello stato globalew. Noi riteniamo:
 \begin{equation}
 \forall a: \boldsymbol{\sigma}[a] = \varnothing \; \vee \; (a \in \mathbb{B}_{20} \; \wedge \; v(\boldsymbol{\sigma}[a]))
 \end{equation}
-where $v$ is the account validity function:
+dove $v$ è la funzione di validità dell'account:
 \begin{equation}
 \quad v(x) \equiv x_n \in \mathbb{P}_{256} \wedge x_b \in \mathbb{P}_{256} \wedge x_s \in \mathbb{B}_{32} \wedge x_c \in \mathbb{B}_{32}
 \end{equation}
