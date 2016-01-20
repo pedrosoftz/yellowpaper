@@ -20,6 +20,7 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{afterpage}
 \usepackage{tikz}
+\usepackage[utf8]{inputenc}
 
 \newcommand{\hcancel}[1]{%
     \tikz[baseline=(tocancel.base)]{
@@ -189,10 +190,10 @@ Lo stato dell'account comprende i quattro campi che seguomo:
 \item[nonce] Un valore scalare uguale al numero delle transazioni spedite da questo indirizzo o, nel caso di account con un codice associatom il numero di creazioni di contratto fatto da questo account. Per account di indirizzi $a$ nello stato $\boldsymbol{\sigma}$, questo potrebbe essere formalmente caratterizzato $\boldsymbol{\sigma}[a]_n$.
 \item[balance] Un valore scalare uguale al numero di Wei posseduto da questo indirizzo. Formalmente denotato $\boldsymbol{\sigma}[a]_b$.
 \item[storageRoot] Un hash a  256-bit del nodo di radice di un albero Merkle Patricia che codifica il contenuto in storage dell' account (una mappatura tra valori interi a 256-bit), condificati in una struttura come una mappatura dall'hash Keccak 256-bit delle chiavi a valori interi a 256-bit codificati in RLP. L'hash è formalmente caratterizzato $\boldsymbol{\sigma}[a]_s$.
-\item[codeHash] L'hash del codice EVM code di questo account---this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval. This hash is formally denoted $\boldsymbol{\sigma}[a]_c$, and thus the code may be denoted as $\mathbf{b}$, given that $\texttt{\small KEC}(\mathbf{b}) = \boldsymbol{\sigma}[a]_c$.
+\item[codeHash] L'hash del codice EVM code di questo account---questo è il codice che viene eseguito se questo indirizzo riceve un messaggio di chiamata; esso è immutabile e quindi, a differenza di tutti gli altri campi, non può essere cambiato dopo la sua compilazione. Tutti questi frammenti di condice sono contenuti nel database dello stato all'interno degli hash corrispondenti per il successivo recuperto. Questo hash è formalmente denotato $\boldsymbol{\sigma}[a]_c$, e per tanto il codice può essere indicato come $\mathbf{b}$, dato questo $\texttt{\small KEC}(\mathbf{b}) = \boldsymbol{\sigma}[a]_c$.
 \end{description}
 
-Since I typically wish to refer not to the trie's root hash but to the underlying set of key/value pairs stored within, I define a convenient equivalence:
+Dato che solitamente mi augro di riferirmi non all'hash della radice della struttura ma al sottostante set di coppie di chiave/valore memorizzate all'interno, definisco un'equivalenza conveniente:
 \begin{equation}
 \texttt{\small TRIE}\big(L_I^*(\boldsymbol{\sigma}[a]_\mathbf{s})\big) \equiv \boldsymbol{\sigma}[a]_s
 \end{equation}
