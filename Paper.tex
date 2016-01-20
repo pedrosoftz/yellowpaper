@@ -153,7 +153,7 @@ Le funzioni operanti su valori molto strutturati sono indicati con una lettera g
 
 Per molte funzioni, una lettera maiuscola è usata, ad esempio $C$, la funzione generale del costo. Queste possono essere impiegate per denotare varianti specifiche, \eg $C_\text{\tiny SSTORE}$, la funzione del costo per l'operazione {\tiny SSTORE}. Per funzioni specifice e possibilmente definite esternamente, potrei impostare come testo della macchina da scrivere, \eg the Keccak-256 funzione di hash (come peril vincitore del contest SHA-3) è indicato $\texttt{KEC}$ (e riferito in in genere come il semplice Keccak). Anche $\texttt{KEC512}$ è riferito alla funzione di hash del Keccak 512.
 
-Gli insieme di dati sono tipicamente indicati con una lettera maiuscola, \eg $T$, è impiegata per caraterrizare una transazione Ethereum. Questo simbolo può, se definito di conseguenza, essere impiegato per rifersi ad una componente individuale, \eg $T_n$, denota il nonce di tale transazione. La forma del pedice è usato per indicare il proprio carattere; \eg gli apici si riferiscono agli insieme di dati con componenti indicabili.
+Gli insiemi di dati sono tipicamente indicati con una lettera maiuscola, \eg $T$, è impiegata per caraterrizare una transazione Ethereum. Questo simbolo può, se definito di conseguenza, essere impiegato per rifersi ad una componente individuale, \eg $T_n$, denota il nonce di tale transazione. La forma del pedice è usato per indicare il proprio carattere; \eg gli apici si riferiscono agli insieme di dati con componenti indicabili.
 
 Sequenze di byte scalari e di grandezza fissa (o, in modo analogo, matrici) sono caratterizzate con una normale lettera minuscola, \eg $n$ che è usata nel documento per denotare il nonce di una transazione. Quelle con un particolare specifico significato possono essere greche, \eg $\delta$, il numero degli oggetti richiesti sulla pila di una data operazione.
 
@@ -167,9 +167,9 @@ Nel caso di uno stato globale $\boldsymbol{\sigma}$, che è una sequenza di acco
 
 Quando si considerano le varianti di valori esistenti, seguo la regola che entro un determinato campo per definizione, se assumiamo che un immodificato valore di `input' può essere indicato da un segnaposto $\Box$ quindi il valore utilizzato e modificabile è denotato come $\Box'$, e i valori intermedi sarebbero $\Box^*$,  $\Box^{**}$ \&c. In occasioni molto speciali, con il fine di massimizzare la leggibilità e solo in casi in cui il significato risulti essere non ambiguo, posso usare pedici alfanumeirci per indicare valori intermedi, soprattutto quelli di particolare rilievo.
 
-When considering the use of existing functions, given a function $f$, the function $f^*$ denotes a similar, element-wise version of the function mapping instead between sequences. It is formally defined in section \ref{ch:block}.
+Quando si considera l'uso di funzioni esistenti, data una funzione $f$, la funzione $f^*$ denota una simile, versione elemento per elemento della funzione di mapping anzichè tra sequenze. Esso è formalmente definito nella sezione \ref{ch:block}.
 
-I define a number of useful functions throughout. One of the more common is $\ell$, which evaluates to the last item in the given sequence:
+Definisco un numero di funzioni utili ovunque. Una delle più comuni è $\ell$, che valuta per l'ultimo elemento nella data sequenza:
 
 \begin{equation}
 \ell(\mathbf{x}) \equiv \mathbf{x}[\lVert \mathbf{x} \rVert - 1]
@@ -177,19 +177,19 @@ I define a number of useful functions throughout. One of the more common is $\el
 
 \section{Blocks, State and Transactions} \label{ch:bst}
 
-Having introduced the basic concepts behind Ethereum, we will discuss the meaning of a transaction, a block and the state in more detail.
+Avendo introdotto i concentti basici dietro Ethereum, discutereno il significato di una transazione, un blocco ed uno stato più nel dettaglio.
 
 \subsection{World State} \label{ch:state}
 
-The world state (\textit{state}), is a mapping between addresses (160-bit identifiers) and account states (a data structure serialised as RLP, see Appendix \ref{app:rlp}). Though not stored on the blockchain, it is assumed that the implementation will maintain this mapping in a modified Merkle Patricia tree (\textit{trie}, see Appendix \ref{app:trie}). The trie requires a simple database backend that maintains a mapping of bytearrays to bytearrays; we name this underlying database the state database. This has a number of benefits; firstly the root node of this structure is cryptographically dependent on all internal data and as such its hash can be used as a secure identity for the entire system state. Secondly, being an immutable data structure, it allows any previous state (whose root hash is known) to be recalled by simply altering the root hash accordingly. Since we store all such root hashes in the blockchain, we are able to trivially revert to old states.
+Lo stato globale (\textit{state}), è una mappatura tra gli indirizzi (identificatori a 160-bit) e gli stati dell'account (una struttura di dati serializzata come RLP, vedere Appendix \ref{app:rlp}). Sebben non registrata sulla blockchain, si presume che l' implementazione manterrà questa mappatura in un albero Merkle Patricia modificato (\textit{trie}, si veda Appendix \ref{app:trie}). L'abero richiede un semplice database in backend che conserva la mappatura dei bytearrays ai bytearrays; nominiamo questo database sottostante il database di stato. Questo ha un numero di benefici; per primo il nodo alla base di questa struttura è crittograficamente dipendente nei confronti di tutti i dati interni ed in quanto tale il proprio hash può essere utilizzato come una identità sicura per l'intero sistema di stato. Secondariamente, essendo una struttura immutabile di dati, permette a qualunque stato precedente( il cui hash di radice è noto) di essere richiamato semplicimente alterando l'hash di root in base ad un accordo. Poichè prendiamo nota di tutti quesi hash di root nella blockchain, siamo capaci inventire in maniera banale i vecchi stati.
 
-The account state comprises the following four fields:
+Lo stato dell'account comprende i quattro campi che seguomo:
 
 \begin{description}
-\item[nonce] A scalar value equal to the number of transactions sent from this address or, in the case of accounts with associated code, the number of contract-creations made by this account. For account of address $a$ in state $\boldsymbol{\sigma}$, this would be formally denoted $\boldsymbol{\sigma}[a]_n$.
-\item[balance] A scalar value equal to the number of Wei owned by this address. Formally denoted $\boldsymbol{\sigma}[a]_b$.
-\item[storageRoot] A 256-bit hash of the root node of a Merkle Patricia tree that encodes the storage contents of the account (a mapping between 256-bit integer values), encoded into the trie as a mapping from the Keccak 256-bit hash of the  256-bit integer keys to the RLP-encoded 256-bit integer values. The hash is formally denoted $\boldsymbol{\sigma}[a]_s$.
-\item[codeHash] The hash of the EVM code of this account---this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval. This hash is formally denoted $\boldsymbol{\sigma}[a]_c$, and thus the code may be denoted as $\mathbf{b}$, given that $\texttt{\small KEC}(\mathbf{b}) = \boldsymbol{\sigma}[a]_c$.
+\item[nonce] Un valore scalare uguale al numero delle transazioni spedite da questo indirizzo o, nel caso di account con un codice associatom il numero di creazioni di contratto fatto da questo account. Per account di indirizzi $a$ nello stato $\boldsymbol{\sigma}$, questo potrebbe essere formalmente caratterizzato $\boldsymbol{\sigma}[a]_n$.
+\item[balance] Un valore scalare uguale al numero di Wei posseduto da questo indirizzo. Formalmente denotato $\boldsymbol{\sigma}[a]_b$.
+\item[storageRoot] Un hash a  256-bit del nodo di radice di un albero Merkle Patricia che codifica il contenuto in storage dell' account (una mappatura tra valori interi a 256-bit), condificati in una struttura come una mappatura dall'hash Keccak 256-bit delle chiavi a valori interi a 256-bit codificati in RLP. L'hash è formalmente caratterizzato $\boldsymbol{\sigma}[a]_s$.
+\item[codeHash] L'hash del codice EVM code di questo account---this is the code that gets executed should this address receive a message call; it is immutable and thus, unlike all other fields, cannot be changed after construction. All such code fragments are contained in the state database under their corresponding hashes for later retrieval. This hash is formally denoted $\boldsymbol{\sigma}[a]_c$, and thus the code may be denoted as $\mathbf{b}$, given that $\texttt{\small KEC}(\mathbf{b}) = \boldsymbol{\sigma}[a]_c$.
 \end{description}
 
 Since I typically wish to refer not to the trie's root hash but to the underlying set of key/value pairs stored within, I define a convenient equivalence:
