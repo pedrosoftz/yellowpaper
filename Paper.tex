@@ -83,41 +83,41 @@ Hashcash, introdotto da \cite{back2002hashcash} (in a five-year retrospective), 
 
 Altri progetti costruiti sul successo del Bitcoin; le alt-coins hanno introdotto altre numerose monete attraverso la modifica del protocollo. Alcune delle più conosciute sono il Litecoin ed il Primecoin, discusse da \cite{sprankel2013technical}. Differenti progetti hanno tentato di prendere il valore del meccanismo principale del protocollo e di riproporlo; \cite{aron2012bitcoin} dibatte, per esempio, del Namecoin che è un progetto che ambisce a fornire un sistema di risoluzione dei nomi di dominio decentralizzato.
 
-Ulteriori progetti tentano ancora di costruire all'apice del network proprio del Bitcoin, sfruttando la grande quantità di valore presente nel sistema ed il vasto ammontare di calcolo computazionale che è indirizzato nel meccanismo di consenso. Il progetto Mastercoin , proposto per la prima volta da \cite{mastercoin2013willett}, prova a dare vita ad un protocollo più ricco implementando molte caratteristiche aggiuntive di alto livello all'apice del protocollo Bitcoin attraverso l'utilizzo di un numero di parti ausiliarie al core del protocollo. Il progetto Coloured Coins, proposto da \cite{colouredcoins2012rosenfeld}, impiega una strategia simile ma più semplificata, arricchendo le regole di una transazione con il fine di in order to break the fungibility of Bitcoin's base currency and allow the creation and tracking of tokens through a special ``chroma-wallet''-protocol-aware piece of software.
+Ulteriori progetti tentano ancora di costruire all'apice del network proprio del Bitcoin, sfruttando la grande quantità di valore presente nel sistema ed il vasto ammontare di calcolo computazionale che è indirizzato nel meccanismo di consenso. Il progetto Mastercoin , proposto per la prima volta da \cite{mastercoin2013willett}, prova a dare vita ad un protocollo più ricco implementando molte caratteristiche aggiuntive di alto livello all'apice del protocollo Bitcoin attraverso l'utilizzo di un numero di parti ausiliarie al core del protocollo. Il progetto Coloured Coins, proposto da \cite{colouredcoins2012rosenfeld}, impiega una strategia simile ma più semplificata, arricchendo le regole di una transazione con il fine di fare a meno della valuta base del Bitcoin e permettere la creazione e il tracciamento dei tokens attraverso uno speciale ``chroma-wallet'' che è una parte del software chhe si interfaccia con il protocollo.
 
-Additional work has been done in the area with discarding the decentralisation foundation; Ripple, discussed by \cite{boutellier2014pirates}, has sought to create a ``federated'' system for currency exchange, effectively creating a new financial clearing system. It has demonstrated that high efficiency gains can be made if the decentralisation premise is discarded.
+Ulteriore lavoro è stato fatto nel settore scartando l'assunto della decentralizzazione; Ripple, discusso da \cite{boutellier2014pirates}, ha cercato di creare un sistema ``federato'' per l'exchange di moneta, creando effettivamente uno nuovo sistema finanziario di clearing. Esso ha dimostrato che un miglioramento molto efficiente può essere ottenuto se la premessa della decentralizzazione viene tralasciata.
 
-Early work on smart contracts has been done by \cite{szabo1997formalizing} and \cite{miller1997future}. Around the 1990s it became clear that algorithmic enforcement of agreements could become a significant force in human cooperation. Though no specific system was proposed to implement such a system, it was proposed that the future of law would be heavily affected by such systems. In this light, Ethereum may be seen as a general implementation of such a \textit{crypto-law} system.
+Il primo lavoro sugli smart contracts è stato fatto da \cite{szabo1997formalizing} e \cite{miller1997future}. Intorno al 1990 è divenuto chiaro che l'appilicazione agli accordi contrattuali di un sistema algoritmico può diventare una forza significativa nella cooperazione umana. Anche se non è stato proposto un sistema specificio per implementare il suddetto sistema, è stato ipotizzato che il futuro del sistema legale poteva essere pesantemente infulenzato da questo tipo di sistemi. Con questa premessa, Ethereum può essere una implementazione generale del suddetto \textit{crypto-law} sistema.
 
 %E language?
 
 \section{The Blockchain Paradigm} \label{ch:overview}
 
-Ethereum, taken as a whole, can be viewed as a transaction-based state machine: we begin with a genesis state and incrementally execute transactions to morph it into some final state. It is this final state which we accept as the canonical ``version'' of the world of Ethereum. The state can include such information as account balances, reputations, trust arrangements, data pertaining to information of the physical world; in short, anything that can currently be represented by a computer is admissible. Transactions thus represent a valid arc between two states; the `valid' part is important---there exist far more invalid state changes than valid state changes. Invalid state changes might, \eg be things such as reducing an account balance without an equal and opposite increase elsewhere. A valid state transition is one which comes about through a transaction. Formally:
+Ethereum, nel suo complesso, può essere visto come una macchina di stato basata sul sistema della transazione: abbiamo iniziato con uno stato di genesi che incrementalmente esegue le transazione con il fine di trasformarlo nello stato finale. In quest'ultimo, che noi accettiamo come la ``version'' canonica del mondo di Ethereum. Lo stato può includere la suddetta informazione come i saldi degli account, reputazioni, accordi fiduciari, dati relativi alle informazioni del mondo fisico; in breve, è ammissibile qualsiasi cosa che può essere rappresentata da un computer. Le transazioni, quindi, rappresentano un valido intervallo tra due stati; la parte `valida' è importante---esistono cambiamenti di stato di gran lunga più invalidi rispetto a quelli validi. I cambiamenti invalidi di stato potrebbero, \eg ad esempio essere cose come una riduzione del sanldo di un account senza un uguale ed opposto incremento altrove. Una valida transizione di stato è quella che avviene attraverso una transazione. Formalmente:
 \begin{equation}
 \boldsymbol{\sigma}_{t+1} \equiv \Upsilon(\boldsymbol{\sigma}_t, T)
 \end{equation}
 
-where $\Upsilon$ is the Ethereum state transition function. In Ethereum, $\Upsilon$, together with $\boldsymbol{\sigma}$ are considerably more powerful then any existing comparable system; $\Upsilon$ allows components to carry out arbitrary computation, while $\boldsymbol{\sigma}$ allows components to store arbitrary state between transactions.
+dove $\Upsilon$ è la funzione di transazione di stato di Ethereum. In Ethereum, $\Upsilon$, insieme a $\boldsymbol{\sigma}$ sono di gran lunga più efficaci che qualsiasi altro sistema comparabile; $\Upsilon$ consente ai componenti di trasportare una computazione arbitraria, mentre $\boldsymbol{\sigma}$ permette ai componenti di memorizzare uno stato arbitrario tra le transazioni.
 
-Transactions are collated into blocks; blocks are chained together using a cryptographic hash as a means of reference. Blocks function as a journal, recording a series of transactions together with the previous block and an identifier for the final state (though do not store the final state itself---that would be far too big). They also punctuate the transaction series with incentives for nodes to \textit{mine}. This incentivisation takes places as a state-transition function, adding value to a nominated account.
+Queste ultime sono collocate all'interno del blocchi; che sono concatenati l'uno con l'altro usando un hash crittografico come strumento di riferimento. La funzione dei blocchi come un giornale, che registra unitariamente una serie di transazioni con il blocco precedente e che funge da identificatore dello stato finale (anche se effettua se stesso lo storing dello stato ---in quanto sarebbe troppo grande). Essi hanno anche contraddistinto le serie della transazione con gli incentivi per i nodi per \textit{mine}. Questa incentivazione ha luogo come una funzione di trasizione di stato, aggiungendo valore all'account desginato.
 
-Mining is the process of dedicating effort (working) to bolster one series of transactions (a block) over any other potential competitor block. It is achieved thanks to a cryptographically secure proof. This scheme is known as a proof-of-work and is discussed in detail in section \ref{ch:pow}.
+Mining è il processo di dedicare uno sforzo computazione (working) per supportare una serie di transazioni (un blocco) rispetto ad un altro qualsiasi blocco in competizione. Esso è ottenuto grazie una prova crittografica sicura. Questo schema è conosciuto come proof-of-work ed è discusso in dettaglio nella sezione \ref{ch:pow}.
 
-Formally, we expand to:
+Formalmente, integriamo:
 \begin{eqnarray}
 \boldsymbol{\sigma}_{t+1} & \equiv & \Pi(\boldsymbol{\sigma}_t, B) \\
 B & \equiv & (..., (T_0, T_1, ...) ) \\
 \Pi(\boldsymbol{\sigma}, B) & \equiv & \Omega(B, \Upsilon(\Upsilon(\boldsymbol{\sigma}, T_0), T_1) ...)
 \end{eqnarray}
 
-Where $\Omega$ is the block-finalisation state transition function (a function that rewards a nominated party); $B$ is this block, which includes a series of transactions amongst some other components; and $\Pi$ is the block-level state-transition function.
+Dove $\Omega$ è la funzione di transazione di stato della finalizzazione del blocco (una funzione che premia una parte designata); $B$ è il blocco, che include una serie di transazioni tra alcuni altri componenti; e $\Pi$ è il la funzione di transizione di stato del livello del blocco.
 
-This is the basis of the blockchain paradigm, a model that forms the backbone of not only Ethereum, but all decentralised consensus-based transaction systems to date.
+Questa è la base del paradigma blockchain, un modello che forma la spina dorsale non solo di Ethereum, ma di tutti i sistemi attuali decentralizzati basati sul consenso.
 
 \subsection{Value}
 
-In order to incentivise computation within the network, there needs to be an agreed method for transmitting value. To address this issue, Ethereum has an intrinsic currency, Ether, known also as {\small ETH} and sometimes referred to by the Old English \DH{}. The smallest subdenomination of Ether, and thus the one in which all integer values of the currency are counted, is the Wei. One Ether is defined as being $10^{18}$ Wei. There exist other subdenominations of Ether:
+Con il fine di incentivare la computazione attaverso il network, c'è bisongo di un metodo concordato per trasmettere valore. Per ottenere questo fine, Ethereum ha una moneta essenziale, Ether, conosciuta anche come {\small ETH} e a volte con riferimento all'inglese classico \DH{}. La più piccola subdenominazione di Ether, e quindi quello nel quale tutti i valori integri della moneta sono contati, è il Wei. Un Ether è definito come essere $10^{18}$ Wei. Esistono altre subdenominazioni di Ether:
 \par
 \begin{center}
 \begin{tabular}{rl}
@@ -133,7 +133,7 @@ $10^{18}$ & Ether \\
 \end{center}
 \par
 
-Throughout the present work, any reference to value, in the context of Ether, currency, a balance or a payment, should be assumed to be counted in Wei.
+Attraverso il presente lavoro, qualsiasi riferimento al valore, nel contesto di Ether, moneta, un saldo o un pagamento, dovrebbe essere assunto di essere conteggiato in Wei.
 
 \subsection{Which History?}
 
