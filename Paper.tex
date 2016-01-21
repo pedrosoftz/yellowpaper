@@ -291,11 +291,11 @@ Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto 
 %\textit{TODO: Introduce logs}
 
 \begin{description}
-\item[parentHash] The Keccak 256-bit hash of the parent block's header, in its entirety; formally $H_p$.
-\item[ommersHash] The Keccak 256-bit hash of the ommers list portion of this block; formally $H_o$.
-\item[beneficiary] The 160-bit address to which all fees collected from the successful mining of this block be transferred; formally $H_c$.
-\item[stateRoot] The Keccak 256-bit hash of the root node of the state trie, after all transactions are executed and finalisations applied; formally $H_r$.
-\item[transactionsRoot] The Keccak 256-bit hash of the root node of the trie structure populated with each transaction in the transactions list portion of the block; formally $H_t$.
+\item[parentHash] L'hash Keccak 256-bit dell'intestazione del blocco genitore, nella sua interezza; formalmente $H_p$.
+\item[ommersHash] L'hash Keccak 256-bit hash RIVEDI QUA of the ommers list portion of this block; formally $H_o$.
+\item[beneficiary] L'indirizzo a 160-bit presso cui sono address to which all fees collected from the successful mining of this block be transferred; formally $H_c$.
+\item[stateRoot] L'hash Keccak 256-bit del nodo madre della struttura dello stato, dopo tutto le transazioni vengono eseguite e applicate le finalizzazioni; formalmente $H_r$.
+\item[transactionsRoot] The Keccak 256-bit hash of the root node of the trie structure populated with each transaction in the transactions list portion of the block; formalmente $H_t$.
 \item[receiptsRoot] The Keccak 256-bit hash of the root node of the trie structure populated with the receipts of each transaction in the transactions list portion of the block; formally $H_e$.
 \item[logsBloom] The Bloom filter composed from indexable information (logger address and log topics) contained in each log entry from the receipt of each transaction in the transactions list; formally $H_b$.
 \item[difficulty] A scalar value corresponding to the difficulty level of this block. This can be calculated from the previous block's difficulty level and the timestamp; formally $H_d$.
