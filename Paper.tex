@@ -20,7 +20,6 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{afterpage}
 \usepackage{tikz}
-\usepackage[utf8]{inputenc}
 
 \newcommand{\hcancel}[1]{%
     \tikz[baseline=(tocancel.base)]{
@@ -287,7 +286,7 @@ T_t \in \begin{cases} \mathbb{B}_{20} & \text{if} \quad T_t \neq \varnothing \\
 
 \subsection{The Block} \label{ch:block}
 
-The block in Ethereum is the collection of relevant pieces of information (known as the block \textit{header}), $H$, together with information corresponding to the comprised transactions, $\mathbf{T}$, and a set of other block headers $\mathbf{U}$ that are known to have a parent equal to the present block's parent's parent (such blocks are known as \textit{ommers}\footnote{\textit{ommer} is the most prevalent (not saying much) gender-neutral term to mean ``sibling of parent''; see \url{http://nonbinary.org/wiki/Gender_neutral_language#Family_Terms}}). The block header contains several pieces of information:
+Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto come il blocco \textit{header}), $H$, insieme con l'informazione corrispondente alle transazioni incluse, $\mathbf{T}$, ed un set delle intestanzioni dell'altro blocco $\mathbf{U}$ che è conosciuto per avere un genitore guale al genitore dell'attuale RIVEDERE QUIthat are known to have a parent equal to the present block's parent's parent RIVEDERE QUI(questi blocchi sono conosciuti come \textit{ommers}\footnote{\textit{ommer} è il più prevalenteis the most prevalent (non dice molto) termine generico neutrale per dire ``fratello del genitore''; si veda \url{http://nonbinary.org/wiki/Gender_neutral_language#Family_Terms}}). L'intestazione del blocco contiene diverse parti di informazione:
 
 %\textit{TODO: Introduce logs}
 
