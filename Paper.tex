@@ -293,29 +293,29 @@ Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto 
 \begin{description}
 \item[parentHash] L'hash Keccak 256-bit dell'intestazione del blocco genitore, nella sua interezza; formalmente $H_p$.
 \item[ommersHash] L'hash Keccak 256-bit hash RIVEDI QUA of the ommers list portion of this block; formally $H_o$.
-\item[beneficiary] L'indirizzo a 160-bit presso cui sono address to which all fees collected from the successful mining of this block be transferred; formally $H_c$.
+\item[beneficiary] L'indirizzo a 160-bit presso cui sono raccolte tutte le commissioni del mining di questo blocco da trasferire; formalmente $H_c$.
 \item[stateRoot] L'hash Keccak 256-bit del nodo madre della struttura dello stato, dopo tutto le transazioni vengono eseguite e applicate le finalizzazioni; formalmente $H_r$.
-\item[transactionsRoot] The Keccak 256-bit hash of the root node of the trie structure populated with each transaction in the transactions list portion of the block; formalmente $H_t$.
-\item[receiptsRoot] The Keccak 256-bit hash of the root node of the trie structure populated with the receipts of each transaction in the transactions list portion of the block; formally $H_e$.
-\item[logsBloom] The Bloom filter composed from indexable information (logger address and log topics) contained in each log entry from the receipt of each transaction in the transactions list; formally $H_b$.
-\item[difficulty] A scalar value corresponding to the difficulty level of this block. This can be calculated from the previous block's difficulty level and the timestamp; formally $H_d$.
-\item[number] A scalar value equal to the number of ancestor blocks. The genesis block has a number of zero; formally $H_i$.
-\item[gasLimit] A scalar value equal to the current limit of gas expenditure per block; formally $H_l$.
-\item[gasUsed] A scalar value equal to the total gas used in transactions in this block; formally $H_g$.
-\item[timestamp] A scalar value equal to the reasonable output of Unix's time() at this block's inception; formally $H_s$.
-\item[extraData] An arbitrary byte array containing data relevant to this block. This must be 32 bytes or fewer; formally $H_x$.
-\item[mixHash] A 256-bit hash which proves combined with the nonce that a sufficient amount of computation has been carried out on this block; formally $H_m$.
-\item[nonce] A 64-bit hash which proves combined with the mix-hash that a sufficient amount of computation has been carried out on this block; formally $H_n$.
+\item[transactionsRoot] L'hash 256-bit del nodo alla radice della struttura hash al cui interno ci sono immaganizzati ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_t$.
+\item[receiptsRoot] L'hash Keccak 256-bit del nodo alla radice della struttura con le ricevute di ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_e$.
+\item[logsBloom] Il filtro a fiore composto da informazioni indicizzabili (l'indirizzo del logger ed i log topics) contenuto in ogni log entry dalla ricevuta di ogni transazione nella lista delle transazioni; formalmente $H_b$.
+\item[difficulty] Un valore scalare corrispondente al livello di difficoltà di questo blocco. Questo può essere calcolato dal livello di difficoltà del precedente blocco e dalla marca temporale; formalmente $H_d$.
+\item[number] Un valore scalare uguale al numero dei blocchi antenati. Il blocco di genesi ne ha un numero pari a zero; formalmente $H_i$.
+\item[gasLimit] Un valore scalare uguale al limite di spesa del gas per blocco; formalmente $H_l$.
+\item[gasUsed] Un valore scalare uguale al gas totale usato nelle transazioni di questo blocco; formalmente $H_g$.
+\item[timestamp] Un valore scalare uguale al ragionevole tempo() di outpout di Unix alla nascita di questo blocco; formalmente $H_s$.
+\item[extraData] Un insieme di dati arbitrario contenete dati rilevanti per questo blocco. Questo deve essere di 32 bytes o meno; formalmente $H_x$.
+\item[mixHash] Un hash a 256-bit che prova che hash che dimostra insieme al nonce che un sufficiente ammontare di computazione è stato convogliato per mezzo di questo blocco; formalmente $H_m$.
+\item[nonce] Un hash a 64-bit che dimostra che insieme con il mix-hash, che un ammontare sufficiente di computazione è stato convogliato per mezzo di questo blocco; formalmente $H_n$.
 \end{description}
 
-Gli altri due componenti nel blocco sono semplicemente una lista di intestazioni di blocchi OMMER (dello stesso formato di cui sopra) e una serie di transazioni. Formalmente, siamo in grado di fare riferimento ad un blocco $B$:
+Gli altri due componenti nel blocco sono semplicemente una lista di intestazioni di blocchi OMMER RIVEDERE QUA (dello stesso formato di cui sopra) e una serie di transazioni. Formalmente, siamo in grado di fare riferimento ad un blocco $B$:
 \begin{equation}
 B \equiv (B_H, B_\mathbf{T}, B_\mathbf{U})
 \end{equation}
 
 \subsubsection{Transaction Receipt}
 
-In order to encode information about a transaction concerning which it may be useful to form a zero-knowledge proof, or index and search, we encode a receipt of each transaction containing certain information from concerning its execution. Each receipt, denoted $B_\mathbf{R}[i]$ for the $i$th transaction) is placed in an index-keyed trie and the root recorded in the header as $H_e$.
+Con il fine di codificare l'informazione circa ad una transazione, riguardo alla quale può essere utile costituire una prova a conoscenza zero, o indice e ricerca, codifichiamo una ricevuta di ogni transazione contenente certe informazioni che attengono la propria esecuzione. Ogni ricevuta, indicata $B_\mathbf{R}[i]$ per la $i$th transaction) è posizionata in una struttura a indice e chiave e la struttura base viene memorizzata nell'intestazione come $H_e$.
 
 The transaction receipt is a tuple of four items comprising the post-transaction state, $R_{\boldsymbol{\sigma}}$, the cumulative gas used in the block containing the transaction receipt as of immediately after the transaction has happened, $R_u$, the set of logs created through execution of the transaction, $R_\mathbf{l}$ and the Bloom filter composed from information in those logs, $R_b$:
 \begin{equation}
