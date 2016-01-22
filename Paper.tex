@@ -297,7 +297,7 @@ Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto 
 \item[stateRoot] L'hash Keccak 256-bit del nodo madre della struttura dello stato, dopo tutto le transazioni vengono eseguite e applicate le finalizzazioni; formalmente $H_r$.
 \item[transactionsRoot] L'hash 256-bit del nodo alla radice della struttura hash al cui interno ci sono immaganizzati ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_t$.
 \item[receiptsRoot] L'hash Keccak 256-bit del nodo alla radice della struttura con le ricevute di ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_e$.
-\item[logsBloom] Il filtro a fiore composto da informazioni indicizzabili (l'indirizzo del logger ed i log topics) contenuto in ogni log entry dalla ricevuta di ogni transazione nella lista delle transazioni; formalmente $H_b$.
+\item[logsBloom] Il filtro Bloom composto da informazioni indicizzabili (l'indirizzo del logger ed i log topics) contenuto in ogni log entry dalla ricevuta di ogni transazione nella lista delle transazioni; formalmente $H_b$.
 \item[difficulty] Un valore scalare corrispondente al livello di difficoltà di questo blocco. Questo può essere calcolato dal livello di difficoltà del precedente blocco e dalla marca temporale; formalmente $H_d$.
 \item[number] Un valore scalare uguale al numero dei blocchi antenati. Il blocco di genesi ne ha un numero pari a zero; formalmente $H_i$.
 \item[gasLimit] Un valore scalare uguale al limite di spesa del gas per blocco; formalmente $H_l$.
@@ -317,25 +317,25 @@ B \equiv (B_H, B_\mathbf{T}, B_\mathbf{U})
 
 Con il fine di codificare l'informazione circa ad una transazione, riguardo alla quale può essere utile costituire una prova a conoscenza zero, o indice e ricerca, codifichiamo una ricevuta di ogni transazione contenente certe informazioni che attengono la propria esecuzione. Ogni ricevuta, indicata $B_\mathbf{R}[i]$ per la $i$th transaction) è posizionata in una struttura a indice e chiave e la struttura base viene memorizzata nell'intestazione come $H_e$.
 
-The transaction receipt is a tuple of four items comprising the post-transaction state, $R_{\boldsymbol{\sigma}}$, the cumulative gas used in the block containing the transaction receipt as of immediately after the transaction has happened, $R_u$, the set of logs created through execution of the transaction, $R_\mathbf{l}$ and the Bloom filter composed from information in those logs, $R_b$:
+La ricevuta della transazione è un insieme di dati di quattro oggetti compreso lo stato successivo la transazione, $R_{\boldsymbol{\sigma}}$, il gas complessivo usato nel blocco che contiene la ricevuta della transazione nel momento immediatamente successivo a quello in cui la transazione avviene $R_u$, il set di lot creato attraverso l'esecuzione della transazione, $R_\mathbf{l}$ ed il filtro Bloom formato attraverso l'informazioni in quei logs, $R_b$:
 \begin{equation}
 R \equiv (R_{\boldsymbol{\sigma}}, R_u, R_b, R_\mathbf{l})
 \end{equation}
 
-The function $L_R$ trivially prepares a transaction receipt for being transformed into an RLP-serialised byte array:
+La funzione $L_R$ prepara semplicemente una ricveuta della transazione per essere trasformata in un insieme di dati serializzati in byte RLP:
 \begin{equation}
 L_R(R) \equiv (\mathtt{\small TRIE}(L_S(R_{\boldsymbol{\sigma}})), R_u, R_b, R_\mathbf{l})
 \end{equation}
-thus the post-transaction state, $R_{\boldsymbol{\sigma}}$ is encoded into a trie structure, the root of which forms the first item.
+quindi lo stato successivo alla transazione, $R_{\boldsymbol{\sigma}}$ è codificato in una struttura ad albero, la cui radice costituisce il primo elemento.
 
-We assert $R_u$, the cumulative gas used is a positive integer and that the logs Bloom, $R_b$, is a hash of size 2048 bits (256 bytes):
+Affermiamo $R_u$, il gas complessivo impiegato come un numero intero positivo e che permette il log di Bloom, $R_b$, è un hash di grandezza a 2048 bits (256 bytes):
 \begin{equation}
 R_u \in \mathbb{P} \quad \wedge \quad R_b \in \mathbb{B}_{256}
 \end{equation}
 
 %Notably $B_\mathbf{T}$ does not get serialised into the block by the block preparation function $L_B$; it is merely a convenience equivalence.
 
-The log entries, $R_\mathbf{l}$, is a series of log entries, termed, for example, $(O_0, O_1, ...)$. A log entry, $O$, is a tuple of a logger's address, $O_a$, a series of 32-bytes log topics, $O_\mathbf{t}$ and some number of bytes of data, $O_\mathbf{d}$:
+Le voci nel log, $R_\mathbf{l}$, sono una serie di informazioni presenti nel log, definite, per esempio, $(O_0, O_1, ...)$. Una voce nel log, $O$, è un insieme di dati dell'indirizzo di chi effettua il log, $O_a$, una serie di topics del log a 32-bytes, $O_\mathbf{t}$ e un po' di bytes di dati, $O_\mathbf{d}$:
 \begin{equation}
 O \equiv (O_a, ({O_\mathbf{t}}_0, {O_\mathbf{t}}_1, ...), O_\mathbf{d})
 \end{equation}
@@ -343,12 +343,12 @@ O \equiv (O_a, ({O_\mathbf{t}}_0, {O_\mathbf{t}}_1, ...), O_\mathbf{d})
 O_a \in \mathbb{B}_{20} \quad \wedge \quad \forall_{t \in O_\mathbf{t}}: t \in \mathbb{B}_{32} \quad \wedge \quad O_\mathbf{d} \in \mathbb{B}
 \end{equation}
 
-We define the Bloom filter function, $M$, to reduce a log entry include a single 256-byte hash:
+Definiamo la funzione del filtro Bloom, $M$, per ridurre una voce nel log che include un hash a 256-byte hash:
 \begin{equation}
 M(O) \equiv \bigvee_{t \in \{O_a\} \cup O_\mathbf{t}} \big( M_{3:2048}(t) \big)
 \end{equation}
 
-where $M_{3:512}$ is a specialised Bloom filter that sets three bits out of 2048, given an arbitrary byte series. It does this through taking the low-order 11 bits of each of the first three pairs of bytes in a Keccak-256 hash of the byte series. Formally:
+dove $M_{3:512}$ è un is a specialised Bloom filter that sets three bits out of 2048, given an arbitrary byte series. It does this through taking the low-order 11 bits of each of the first three pairs of bytes in a Keccak-256 hash of the byte series. Formally:
 \begin{eqnarray}
 M_{3:2048}(\mathbf{x}: \mathbf{x} \in \mathbb{B}) & \equiv & \mathbf{y}: \mathbf{y} \in \mathbb{B}_{256} \quad \text{where:}\\
 \mathbf{y} & = & (0, 0, ..., 0) \quad \text{except:}\\
