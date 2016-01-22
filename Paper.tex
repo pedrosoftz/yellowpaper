@@ -256,7 +256,7 @@ Al contrario, una transazione tramite messaggio di chiamata contiene:
 \item[data] Un insieme di data di grandezza illimitata in byte che specifica i dati di input del messaggio di chiamata, formalmente $T_\mathbf{d}$.
 \end{description}
 
-Appendix \ref{app:signing} sepfifica la funzione, $S$, che mappa le transazioni del mittente, ed accade attraverso l'ECDSA della curva SECP-256k1, usando l'hash della transazione (eccetto gli ultimi tre campi per la firma) come il dato per firmare. Per adesso noi semplicemente asseriamo che il mittente di una data transazione $T$ può essere rappresentato con $S(T)$.
+Appendix \ref{app:signing} specifica la funzione, $S$, che mappa le transazioni del mittente, ed accade attraverso l'ECDSA della curva SECP-256k1, usando l'hash della transazione (eccetto gli ultimi tre campi per la firma) come il dato per firmare. Per adesso noi semplicemente asseriamo che il mittente di una data transazione $T$ può essere rappresentato con $S(T)$.
 
 \begin{equation}
 L_T(T) \equiv \begin{cases}
@@ -348,7 +348,7 @@ Definiamo la funzione del filtro Bloom, $M$, per ridurre una voce nel log che in
 M(O) \equiv \bigvee_{t \in \{O_a\} \cup O_\mathbf{t}} \big( M_{3:2048}(t) \big)
 \end{equation}
 
-dove $M_{3:512}$ è un is a specialised Bloom filter that sets three bits out of 2048, given an arbitrary byte series. It does this through taking the low-order 11 bits of each of the first three pairs of bytes in a Keccak-256 hash of the byte series. Formally:
+dove $M_{3:512}$ è un filtro Bloom specializzato che imposta tre bit al di fuori di 2048, dando una serie arbitraria di dati. Fa questo prendendo gli 11 bit di basso ordine delle prime tre coppie di byte in hash Keccak 256 della serie di dati. Formalmente:
 \begin{eqnarray}
 M_{3:2048}(\mathbf{x}: \mathbf{x} \in \mathbb{B}) & \equiv & \mathbf{y}: \mathbf{y} \in \mathbb{B}_{256} \quad \text{where:}\\
 \mathbf{y} & = & (0, 0, ..., 0) \quad \text{except:}\\
@@ -356,11 +356,11 @@ M_{3:2048}(\mathbf{x}: \mathbf{x} \in \mathbb{B}) & \equiv & \mathbf{y}: \mathbf
 m(\mathbf{x}, i) &\equiv& \mathtt{\tiny KEC}(\mathbf{x})[i, i + 1] \bmod 2048
 \end{eqnarray}
 
-where $\mathcal{B}$ is the bit reference function such that $\mathcal{B}_j(\mathbf{x})$ equals the bit of index $j$ (indexed from 0) in the byte array $\mathbf{x}$.
+dove $\mathcal{B}$ è la funzione di riferimento tale che $\mathcal{B}_j(\mathbf{x})$ equivale al bit dell'indice $j$ (indicizzato da 0) nell'insieme di byte $\mathbf{x}$.
 
 \subsubsection{Holistic Validity}
 
-We can assert a block's validity if and only if it satisfies several conditions: it must be internally consistent with the ommer and transaction block hashes and the given transactions $B_\mathbf{T}$ (as specified in sec \ref{ch:finalisation}), when executed in order on the base state $\boldsymbol{\sigma}$ (derived from the final state of the parent block), result in a new state of the identity $H_r$:
+Possiamo affermare che la validità del blocco se e solo se soddisfa diverse condizioni: deve essere internamente coerente con l'ommer e gli hash della transazione del blocco a date transazioni $B_\mathbf{T}$ (come specificato in sec \ref{ch:finalisation}), dove eseguito in ordine nella base dello stato $\boldsymbol{\sigma}$ (derivato dallo stato finale del blocco genitore), risulta in un nuovo stato dell'identità $H_r$:
 \begin{equation}
 \begin{array}[t]{lclc}
 H_r &\equiv& \mathtt{\small TRIE}(L_S(\Pi(\boldsymbol{\sigma}, B))) & \wedge \\
