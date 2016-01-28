@@ -453,15 +453,15 @@ $H_s$ è la marca temporale del blocco $H$ e deve soddisfare la relazione:
 H_s > {P(H)_H}_s
 \end{equation}
 
-This mechanism enforces a homeostasis in terms of the time between blocks; a smaller period between the last two blocks results in an increase in the difficulty level and thus additional computation required, lengthening the likely next period. Conversely, if the period is too large, the difficulty, and expected time to the next block, is reduced.
+Questo meccanismo fa rispettare una omeostasi in termini del tempo tra i blocchi; un periodo inferiore tra gli ultimi due blocchi comporta in un incremento del livello di difficoltà e quindi è richiesta una computazione aggiuntivae, che allunga verosimilmente il periodo successivo. Al contrario, se il periodo è troppo grande, la difficoltà, ed il tempo atteso per il prossimo blocco, si riducono.
 
-The nonce, $H_n$, must satisfy the relations:
+Il nonce, $H_n$, deve soddifare le relazioni:
 \begin{equation}
 n \leqslant \frac{2^{256}}{H_d} \quad \wedge \quad m = H_m
 \end{equation}
 with $(n, m) = \mathtt{PoW}(H_{\hcancel{n}}, H_n, \mathbf{d})$.
 
-Where $H_{\hcancel{n}}$ is the new block's header $H$, but \textit{without} the nonce and mix-hash components, $\mathbf{d}$ being the current DAG, a large data set needed to compute the mix-hash, and $\mathtt{PoW}$ is the proof-of-work function (see section \ref{ch:pow}): this evaluates to an array with the first item being the mix-hash, to proof that a correct DAG has been used, and the second item being a pseudo-random number cryptographically dependent on $H$ and $\mathbf{d}$. Given an approximately uniform distribution in the range $[0, 2^{64})$, the expected time to find a solution is proportional to the difficulty, $H_d$.
+Dove $H_{\hcancel{n}}$ è la nuova intestazione del blocco $H$, ma \textit{without} il nonce e i componenti mix-hash, $\mathbf{d}$ essendo l'attuale DAG, un grande set di dati necessari per calcolare il mix-hash, e $\mathtt{PoW}$ è la funzione proof-of-work (si veda la sezione \ref{ch:pow}): this evaluates to an array with the first item being the mix-hash, to proof that a correct DAG has been used, and the second item being a pseudo-random number cryptographically dependent on $H$ and $\mathbf{d}$. Given an approximately uniform distribution in the range $[0, 2^{64})$, the expected time to find a solution is proportional to the difficulty, $H_d$.
 
 This is the foundation of the security of the blockchain and is the fundamental reason why a malicious node cannot propagate newly created blocks that would otherwise overwrite (``rewrite'') history. Because the nonce must satisfy this requirement, and because its satisfaction depends on the contents of the block and in turn its composed transactions, creating new, valid, blocks is difficult and, over time, requires approximately the total compute power of the trustworthy portion of the mining peers.
 
