@@ -371,34 +371,34 @@ H_b &\equiv& \bigvee_{\mathbf{r} \in B_\mathbf{R}} \big( \mathbf{r}_b \big)
 \end{array}
 \end{equation}
 
-where $p(k, v)$ is simply the pairwise RLP transformation, in this case, the first being the index of the transaction in the block and the second being the transaction receipt:
+dove $p(k, v)$ è semplicemente le coppie di trasformazione RLP, in questo caso, la prima è l'indice della transazione nel blocco e la seconda la ricevuta:
 \begin{equation}
 p(k, v) \equiv \big( \mathtt{\small RLP}(k), \mathtt{\small RLP}(v) \big)
 \end{equation}
 
-Furthermore:
+Inoltre:
 \begin{equation}
 \mathtt{\small TRIE}(L_S(\boldsymbol{\sigma})) = {P(B_H)_H}_r
 \end{equation}
 
-Thus $\texttt{\small TRIE}(L_S(\boldsymbol{\sigma}))$ is the root node hash of the Merkle Patricia tree structure containing the key-value pairs of the state $\boldsymbol{\sigma}$ with values encoded using RLP, and $P(B_H)$ is the parent block of $B$, defined directly.
+Quindi $\texttt{\small TRIE}(L_S(\boldsymbol{\sigma}))$ è l'hash del nodo radice della struttutra Merkle Patricia tree contenente le coppie chiave-valore dello stato $\boldsymbol{\sigma}$ con i valori condificati usando RLP, e $P(B_H)$ è il blocco genitore di $B$, definito in maniera diretta.
 
-The values stemming from the computation of transactions, specifically the transaction receipts, $B_\mathbf{R}$, and that defined through the transactions state-accumulation function, $\Pi$, are formalised later in section \ref{sec:statenoncevalidation}.
+I valori derivanti dalla computazione delle transazioni, specificatamente dalle ricevute delle transazioni, $B_\mathbf{R}$, e che sono definite attraverso la funzione di aumento di stato delle transazioni, $\Pi$, sono formalizzate più avanti nella sezione \ref{sec:statenoncevalidation}.
 
 \subsubsection{Serialisation}
 
-The function $L_B$ and $L_H$ are the preparation functions for a block and block header respectively. Much like the transaction receipt preparation function $L_R$, we assert the types and order of the structure for when the RLP transformation is required:
+Le funzioni $L_B$ e $L_H$ sono quelle preparatorie rispettivamente per un blocco e per l'intestazione di un blocco. In maniera del tutto simile la funzione di preparazione della ricevuta della transazione $L_R$, sosteniamo i tipi e l'ordine della struttura per quando la trasformazione RLP è richiesta:
 \begin{eqnarray}
 \quad L_H(H) & \equiv & (\begin{array}[t]{l}H_p, H_o, H_c, H_r, H_t, H_e, H_b, H_d,\\ H_i, H_l, H_g, H_s, H_x, H_m, H_n \; )\end{array} \\
 \quad L_B(B) & \equiv & \big( L_H(B_H), L_T^*(B_\mathbf{T}), L_H^*(B_\mathbf{U}) \big)
 \end{eqnarray}
 
-With $L_T^*$ and $L_H^*$ being element-wise sequence transformations, thus:
+Con $L_T^*$ e $L_H^*$ che sono sequenze di trasformazione elemento per elemento, perciò:
 \begin{equation}
 f^*\big( (x_0, x_1, ...) \big) \equiv \big( f(x_0), f(x_1), ... \big) \quad \text{for any function} \; f
 \end{equation}
 
-The component types are defined thus:
+Quindi i tipi di componente sono definiti:
 \begin{equation}
 \begin{array}[t]{lclclcl}
 H_p \in \mathbb{B}_{32} & \wedge & H_o \in \mathbb{B}_{32} & \wedge & H_c \in \mathbb{B}_{20} & \wedge \\
@@ -409,26 +409,26 @@ H_x \in \mathbb{B} & \wedge & H_m \in \mathbb{B}_{32} & \wedge & H_n \in \mathbb
 \end{array}
 \end{equation}
 
-where
+dove
 \begin{equation}
 \mathbb{B}_n = \{ B: B \in \mathbb{B} \wedge \lVert B \rVert = n \}
 \end{equation}
 
-We now have a rigorous specification for the construction of a formal block structure. The RLP function $\texttt{\small RLP}$ (see Appendix \ref{app:rlp}) provides the canonical method for transforming this structure into a sequence of bytes ready for transmission over the wire or storage locally.
+Sappiamo che abbiamo una rigorosa specifica per la costruzione di una struttura formale di un blocco. La funzione RLP $\texttt{\small RLP}$ (see Appendix \ref{app:rlp}) fornisce il metodo canonico per la trasformazione di questa struttura in una sequenza di byte pronta per la trasmissione attraverso la rete o o conservati localmente.
 
 \subsubsection{Block Header Validity}
 
-We define $P(B_H)$ to be the parent block of $B$, formally:
+Definiamo $P(B_H)$ essere il blocco genitore di $B$, formalmente:
 \begin{equation}
 P(H) \equiv B': \mathtt{\tiny KEC}(\mathtt{\tiny RLP}(B'_H)) = H_p
 \end{equation}
 
-The block number is the parent's block number incremented by one:
+Il numero del blocco è il numero del blocco genitore incrementato di uno:
 \begin{equation}
 H_i \equiv {{P(H)_H}_i} + 1
 \end{equation}
 
-The canonical difficulty of a block of header $H$ is defined as $D(H)$:
+La difficoltà canonica di un blocco dell'intestazione $H$ è definita come $D(H)$:
 \begin{equation}
 D(H) \equiv \begin{cases}
 131072 & \text{if} \quad H_i = 0\\
@@ -441,14 +441,14 @@ where:
 x = {P(H)_H}_d - \left\lfloor\frac{{P(H)_H}_d}{2048}\right\rfloor
 \end{equation}
 
-The canonical gas limit $H_l$ of a block of header $H$ must fulfil the relation:
+Il limite del gas standard $H_l$ di un blocco dell'intestazione $H$ deve soddisfare la relazione:
 \begin{eqnarray}
 & & H_l < {P(H)_H}_l + \left\lfloor\frac{{P(H)_H}_l}{1024}\right\rfloor \quad \wedge \\
 & & H_l > {P(H)_H}_l - \left\lfloor\frac{{P(H)_H}_l}{1024}\right\rfloor \quad \wedge \\
 & & H_l \geqslant 5000
 \end{eqnarray}
 
-$H_s$ is the timestamp of block $H$ and must fulfil the relation:
+$H_s$ è la marca temporale del blocco $H$ e deve soddisfare la relazione:
 \begin{equation}
 H_s > {P(H)_H}_s
 \end{equation}
