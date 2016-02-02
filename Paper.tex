@@ -511,34 +511,34 @@ Formalmente, consideriamo la funzione $\Upsilon$, con $T$ che è una transazione
 Quindi $\boldsymbol{\sigma}'$ è lo stato successivo alla transazione. Definiamo anche $\Upsilon^g$ per valutare l'ammontare di gas usato nell'esecuzione di una transazione e $\Upsilon^\mathbf{l}$ per stimare gli oggetti accumalati nel log della transazione, entrambi definiti successivamente.
 
 \subsection{Substate}
-Attraverso l'escuzione della transazione, we accrue certain information that is acted upon immediately following the transaction. We call this \textit{transaction substate}, and represent it as $A$, which is a tuple:
+Attraverso l'escuzione della transazione, noi accomuliamo certe informazioni RIVEDI QUA that is acted upon immediately following the transaction. Chiamiamo questo \textit{transaction substate}, e rappresentiamo questo come $A$, che è un insieme di dati:
 \begin{equation}
 A \equiv (A_\mathbf{s}, A_\mathbf{l}, A_r)
 \end{equation}
 
-The tuple contents include $A_\mathbf{s}$, the suicide set: a set of accounts that will be discarded following the transaction's completion. $A_\mathbf{l}$ is the log series: this is a series of archived and indexable `checkpoints' in VM code execution that allow for contract-calls to be easily tracked by onlookers external to the Ethereum world (such as decentralised application front-ends). Finally there is $A_r$, the refund balance, increased through using the {\small SSTORE} instruction in order to reset contract storage to zero from some non-zero value. Though not immediately refunded, it is allowed to partially offset the total execution costs.
+I contenuti dell'insieme di dati includono $A_\mathbf{s}$, il set suicidio: un set di account che saranno scartati a seguito del completamento della transazione. $A_\mathbf{l}$ è il log della serie: si tratta di una serie di `checkpoints' archiviati ed indicizzabili nell'esecuzione del codice VM che permette alle chiamate-contratto di essere monitorate da osservatori esterni al mondo di Ethereum (come alle interfacce di un'applicazione decentralizzata). Infine c'è $A_r$, il saldo di rimborso, incrementato attraverso l'uso dell'istruzione {\small SSTORE} con il fine di eseguire il riavvio del contratto di storage a zero da qualche valore diverso da zero. Anche se non immediatamente rimborsati, è consentito di compensare parzialmente i costi totali dell'esecuzione.
 
-For brevity, we define the empty substate $A^0$ to have no suicides, no logs and a zero refund balance:
+Per brevità, definiamo il sottostato vuoto $A^0$ non avere suicidi, nessun log e zero saldo di rimborso:
 \begin{equation}
 A^0 \equiv (\varnothing, (), 0)
 \end{equation}
 
 \subsection{Execution}
-We define intrinsic gas $g_0$, the amount of gas this transaction requires to be paid prior to execution, as follows:
+Definiamo il gas intrinseco $g_0$, l'ammontare di gas che questa transazione richiede di versare prima dell'esecuzione, come segue:
 \begin{equation}
 g_0 \equiv \sum_{i \in T_\mathbf{i}, T_\mathbf{d}} \begin{cases} G_{txdatazero} & \text{if} \quad i = 0 \\ G_{txdatanonzero} & \text{otherwise} \end{cases} + G_{transaction}\\
 \end{equation}
 
-where $T_\mathbf{i},T_\mathbf{d}$ means the series of bytes of the transaction's associated data and initialisation EVM-code, depending on whether the transaction is for contract-creation or message-call. $G$ is defined in Appendix \ref{app:fees}.
+dove $T_\mathbf{i},T_\mathbf{d}$ significa la serie di byte dei dati associati alla transazione ed inizializzati con un codice EVM, a seconda che la transazione sia per una creazione di un contratto o per una chiamata di un messaggio. $G$ è definito in Appendix \ref{app:fees}.
 
 %todo Explain g_d reason?
 
-The up-front cost $v_0$ is calculated as:
+Il costo anticipato $v_0$ è calcolato come:
 \begin{equation}
 v_0 \equiv T_g T_p + T_v
 \end{equation}
 
-The validity is determined as:
+La validità è derminata come:
 \begin{equation}
 \begin{array}[t]{rcl}
 S(T) & \neq & \varnothing \quad \wedge \\
@@ -550,11 +550,11 @@ T_g & \leqslant & {B_H}_l - \ell(B_\mathbf{R})_u
 \end{array}
 \end{equation}
 
-Note the final condition; the sum of the transaction's gas limit, $T_g$, and the gas utilised in this block prior, given by $\ell(B_\mathbf{R})_u$, must be no greater than the block's \textbf{gasLimit}, ${B_H}_l$. 
+Si noti la condizione finale; la somma del limite del gas della transazione, $T_g$, ed il gas utilizzato in precedenza in questo bloccoa, dato da $\ell(B_\mathbf{R})_u$, non deve essere maggiore del \textbf{gasLimit}, ${B_H}_l$ del blocco. 
 
-The execution of a valid transaction begins with an irrevocable change made to the state: the nonce of the account of the sender, $S(T)$, is incremented by one and the balance is reduced by the up-front cost, $v_0$. The gas available for the proceeding computation, $g$, is defined as $T_g - g_0$. The computation, whether contract creation or a message call, results in an eventual state (which may legally be equivalent to the current state), the change to which is deterministic and never invalid: there can be no invalid transactions from this point.
+L'esecuzione di una transazione valida inizia con il cambio irrevocabile fatto allo stato: il nonce dell'account del mittente, $S(T)$, è incrementato di uno e il saldo è ridotto dal costo anticipato, $v_0$. Il gas disponibile per il procedere della computazione, $g$, è definito come $T_g - g_0$. La computazione, sia la creazione di un contratto o la chiamata di un messaggio, risulta in uno stato eventuale (che può essere legalmente equivalente allo stato attuale), il cambiamento a cui è deterministico e mai invalido: non ci possono essere transazioni valide da questo punto.
 
-We define the checkpoint state $\boldsymbol{\sigma}_0$:
+Definiamo lo stato checkpoint $\boldsymbol{\sigma}_0$:
 \begin{eqnarray}
 \boldsymbol{\sigma}_0 & \equiv & \boldsymbol{\sigma} \quad \text{except:} \\
 \boldsymbol{\sigma}_0[S(T)]_b & \equiv & \boldsymbol{\sigma}[S(T)]_b - T_g T_p \\
