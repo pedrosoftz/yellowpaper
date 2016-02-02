@@ -496,22 +496,22 @@ In generale, l'Ether impiegato per acquistare il gas che non è rimborsabile è 
 L'esecuzione di una transazione è la parte più complessa del protocollo Ethereum: essa definisce la funzione di transizione di stato $\Upsilon$. Si presume che qualsiasi transazioni eseguita superi i test iniziali di validità intrinseca. Questi includono:
 
 \begin{enumerate}
-\item The transaction is well-formed RLP, with no additional trailing bytes;
-\item the transaction signature is valid;
-\item the transaction nonce is valid (equivalent to the sender account's current nonce);
-\item the gas limit is no smaller than the intrinsic gas, $g_0$, used by the transaction;
-\item the sender account balance contains at least the cost, $v_0$, required in up-front payment.
+\item La transazione è un RLP ben strutturata, con nessun ulteriore byte;
+\item la firma della transazione è valida;
+\item il nonce della transazione è valido (equivalnte al nonce attuale dell'account del mittente);
+\item il limite del gas non è inferiore al gas intrinseco, $g_0$, impiegato dalla transazione;
+\item il saldo dell'account del mittente contiene almeno il costo, $v_0$, richiesto dal pagamento anticipato.
 \end{enumerate}
 
-Formally, we consider the function $\Upsilon$, with $T$ being a transaction and $\boldsymbol{\sigma}$ the state:
+Formalmente, consideriamo la funzione $\Upsilon$, con $T$ che è una transazione e $\boldsymbol{\sigma}$ lo stato:
 \begin{equation}
 \boldsymbol{\sigma}' = \Upsilon(\boldsymbol{\sigma}, T)
 \end{equation}
 
-Thus $\boldsymbol{\sigma}'$ is the post-transactional state. We also define $\Upsilon^g$ to evaluate to the amount of gas used in the execution of a transaction and $\Upsilon^\mathbf{l}$ to evaluate to the transaction's accrued log items, both to be formally defined later.
+Quindi $\boldsymbol{\sigma}'$ è lo stato successivo alla transazione. Definiamo anche $\Upsilon^g$ per valutare l'ammontare di gas usato nell'esecuzione di una transazione e $\Upsilon^\mathbf{l}$ per stimare gli oggetti accumalati nel log della transazione, entrambi definiti successivamente.
 
 \subsection{Substate}
-Throughout transaction execution, we accrue certain information that is acted upon immediately following the transaction. We call this \textit{transaction substate}, and represent it as $A$, which is a tuple:
+Attraverso l'escuzione della transazione, we accrue certain information that is acted upon immediately following the transaction. We call this \textit{transaction substate}, and represent it as $A$, which is a tuple:
 \begin{equation}
 A \equiv (A_\mathbf{s}, A_\mathbf{l}, A_r)
 \end{equation}
