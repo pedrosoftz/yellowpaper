@@ -561,7 +561,7 @@ Definiamo lo stato checkpoint $\boldsymbol{\sigma}_0$:
 \boldsymbol{\sigma}_0[S(T)]_n & \equiv & \boldsymbol{\sigma}[S(T)]_n + 1
 \end{eqnarray}
 
-Evaluating $\boldsymbol{\sigma}_P$ from $\boldsymbol{\sigma}_0$ depends on the transaction type; either contract creation or message call; we define the tuple of post-execution provisional state $\boldsymbol{\sigma}_P$, remaining gas $g'$ and substate $A$:
+Valutando $\boldsymbol{\sigma}_P$ da $\boldsymbol{\sigma}_0$ dipende dal tipo di transazione; sia la creazione di un contratto che il messaggio di chiamata; definiamo l'insieme di dati dello stato provvisorio di post esecuzione $\boldsymbol{\sigma}_P$, il gas rimanente $g'$ ed il sottostato $A$:
 \begin{equation}
 (\boldsymbol{\sigma}_P, g', A) \equiv \begin{cases}
 \Lambda(\boldsymbol{\sigma}_0, S(T), T_o, &\\ \quad\quad g, T_p, T_v, T_\mathbf{i}, 0) & \text{if} \quad T_t = \varnothing \\
@@ -569,22 +569,22 @@ Evaluating $\boldsymbol{\sigma}_P$ from $\boldsymbol{\sigma}_0$ depends on the t
 \end{cases}
 \end{equation}
 
-where $g$ is the amount of gas remaining after deducting the basic amount required to pay for the existence of the transaction:
+dove $g$ è l'ammontare di gas rimamente dopo la sottrazione dell'ammonatare basico necessario per pegare affinchè una transazione avvenga:
 \begin{equation}
 g \equiv T_g - g_0
 \end{equation}
-and $T_o$ is the original transactor, which can differ from the sender in the case of a message call or contract creation not directly triggered by a transaction but coming from the execution of EVM-code.
+e $T_o$ colui che effettua la transazione in origine, che può differire dal mittente nel caso in cui un messaggio di chiamata o la creazione di un contratto non derivino direttamente da una transazione ma pervengano dall'esecuzione di un codice EVM.
 
-Note we use $\Theta_{3}$ to denote the fact that only the first three components of the function's value are taken; the final represents the message-call's output value (a byte array) and is unused in the context of transaction evaluation.
+Si noti che usiamo $\Theta_{3}$ per indicare il fatto che solo i primi tre componenti del valore della transazione sono impiegati; il finale rappresenta il valore di outopout del messaggio di chiamata (un insieme di dati) e non è impiegato nel contesto della valutaziona delle transazione.
 
-After the message call or contract creation is processed, the state is finalised by determining the amount to be refunded, $g^*$ from the remaining gas, $g'$, plus some allowance from the refund counter, to the sender at the original rate.
+Dopo il messaggio di chiamata o dopo che la creazione di un contratto è processata, lo stato è finalizzato determinando l'ammontare da rifondere, $g^*$ dal gas rimanente, $g'$, più qualche somma dal contantore del rimborso, al mittente al tasso originale.
 \begin{equation}
 g^* \equiv g' + \min \{ \Big\lfloor \dfrac{T_g - g'}{2} \Big\rfloor, A_r \}
 \end{equation}
 
-The total refundable amount is the legitimately remaining gas $g'$, added to $A_r$, with the latter component being capped up to a maximum of half (rounded down) of the total amount used $T_g - g'$.
+L'ammontare totale rimborsabile è il gas che rimane legittimamente $g'$, addizionato a $A_r$, con quest'ultimo componente che è limitato fino al massimo di metà (arrotondato per difetto) del totale dell'ammontate impiegato $T_g - g'$.
 
-The Ether for the gas is given to the miner, whose address is specified as the beneficiary of the present block $B$. So we define the pre-final state $\boldsymbol{\sigma}^*$ in terms of the provisional state $\boldsymbol{\sigma}_P$:
+L'Ether per il gas è dato ai miner, i cui indirizzi sono specificati come i benificiari del blocco attuale $B$. Così definiamo lo stato precedente al finale $\boldsymbol{\sigma}^*$ in termini di stato provvisorio $\boldsymbol{\sigma}_P$:
 \begin{eqnarray}
 \boldsymbol{\sigma}^* & \equiv & \boldsymbol{\sigma}_P \quad \text{except} \\
 \boldsymbol{\sigma}^*[S(T)]_b & \equiv & \boldsymbol{\sigma}_P[S(T)]_b + g^* T_p \\
@@ -592,19 +592,19 @@ The Ether for the gas is given to the miner, whose address is specified as the b
 m & \equiv & {B_H}_c
 \end{eqnarray}
 
-The final state, $\boldsymbol{\sigma}'$, is reached after deleting all accounts that appear in the suicide list:
+Lo stato finale, $\boldsymbol{\sigma}'$, è raggiunto dopo che sono elimitati tutti gli account che appaiono nella lista suicidio:
 \begin{eqnarray}
 \boldsymbol{\sigma}' & \equiv & \boldsymbol{\sigma}^* \quad \text{except} \\
 \forall i \in A_\mathbf{s}: \boldsymbol{\sigma}'[i] & \equiv & \varnothing
 \end{eqnarray}
 
-And finally, we specify $\Upsilon^g$, the total gas used in this transaction and $\Upsilon^\mathbf{l}$, the logs created by this transaction:
+E alla fine, specifichiamo $\Upsilon^g$, il gas totale utilizzato in questa transazione e $\Upsilon^\mathbf{l}$, i log creati da questa transazione:
 \begin{eqnarray}
 \Upsilon^g(\boldsymbol{\sigma}, T) & \equiv & T_g - g' \\
 \Upsilon^\mathbf{l}(\boldsymbol{\sigma}, T) & \equiv & A_\mathbf{l}
 \end{eqnarray}
 
-These are used to help define the transaction receipt, discussed later.
+Questi sono usati per aiutare a definire la ricevuta della transazione, discussa più tardi.
 
 %In the case that $s = m$ then we simply return the Ether back to the sender/miner, collapsing the exception into:
 %\begin{eqnarray}
