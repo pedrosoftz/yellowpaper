@@ -627,7 +627,7 @@ a \equiv \mathcal{B}_{96..255}\Big(\mathtt{\tiny KEC}\Big(\mathtt{\tiny RLP}\big
 
 dove $\mathtt{\tiny KEC}$ è la funzione di hash Keccak 256-bit, $\mathtt{\tiny RLP}$ è la funzione di codifica RLP, $\mathcal{B}_{a..b}(X)$ stima il valore binario contenete i bit degli indici nel range $[a, b]$ dei dati binari $X$ and $\boldsymbol{\sigma}[x]$ è l'indirizzo stato di $x$ or $\varnothing$ se nessuno esiste. Si noti che impieghiamo un valore minore rispetto a quello del nonce del mittente; asseriamo che abbiamo incrementato il nonce dell'account del mittente prima di questa chiamata, e così il valore impiegato nel nonce del mittente all'inizio della transazione che ha dato inizio o dell'operazione VM.
 
-The account's nonce is initially defined as zero, the balance as the value passed, the storage as empty and the code hash as the Keccak 256-bit hash of the empty string; the sender's balance is also reduced by the value passed. Thus the mutated state becomes $\boldsymbol{\sigma}^*$:
+Il nonce dell'account è inizialmente impostato a zero, il saldoThe account's nonce is initially defined as zero, il saldo come il valore passato, lo storage come vuoto e l'hash del codice come hash Keccak 256-bit della stringa vuota; il salndo del mittente è anche ridotto dal valore passato. Quindi lo stato mutato diventa $\boldsymbol{\sigma}^*$:
 \begin{equation}
 \boldsymbol{\sigma}^* \equiv \boldsymbol{\sigma} \quad \text{except:}
 \end{equation}
@@ -636,7 +636,7 @@ The account's nonce is initially defined as zero, the balance as the value passe
 \boldsymbol{\sigma}^*[s]_b &\equiv& \boldsymbol{\sigma}^*[s]_b - v
 \end{eqnarray}
 
-where $v'$ is the account's pre-existing value, in the event it was previously in existence:
+dove $v'$ è il valore preesistente dell'account, nel caso in cui fosse esistito in precedenza:
 \begin{equation}
 v' \equiv \begin{cases}
 0 & \text{if} \quad \boldsymbol{\sigma}[a] = \varnothing\\
@@ -646,7 +646,7 @@ v' \equiv \begin{cases}
 
 %It is asserted that the state database will also change such that it defines the pair $(\mathtt{\tiny KEC}(\mathbf{b}), \mathbf{b})$.
 
-Finally, the account is initialised through the execution of the initialising EVM code $\mathbf{i}$ according to the execution model (see section \ref{ch:model}). Code execution can effect several events that are not internal to the execution state: the account's storage can be altered, further accounts can be created and further message calls can be made. As such, the code execution function $\Xi$ evaluates to a tuple of the resultant state $\boldsymbol{\sigma}^{**}$, available gas remaining $g^{**}$, the accrued substate $A$ and the body code of the account $\mathbf{b}$.
+Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di escuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, further accounts can be created and further message calls can be made. As such, the code execution function $\Xi$ evaluates to a tuple of the resultant state $\boldsymbol{\sigma}^{**}$, available gas remaining $g^{**}$, the accrued substate $A$ and the body code of the account $\mathbf{b}$.
 
 Code execution depletes gas; thus it may exit before the code has come to a natural halting state. In this (and several other) exceptional cases we say an Out-of-Gas exception has occurred: The evaluated state is defined as being the empty set $\varnothing$ and the entire create operation should have no effect on the state, effectively leaving it as it was immediately prior to attempting the creation. The gas remaining should be zero in any such exceptional condition. If the creation was conducted as the reception of a transaction, then this doesn't affect payment of the intrinsic cost: it is paid regardless.
 
