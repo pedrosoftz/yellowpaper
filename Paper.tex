@@ -690,22 +690,22 @@ $I_\mathbf{d}$ restituisce l'insieme di dati vuoto in quanto non vi sono dati di
 Nessun codice è inserito nello stato se il gas non compra la fee di deposito aggiuntiva per byte, comunque, il valore è ancora trasferito e gli effetti collaterali dell'esecuzione hanno corso.
 
 \subsection{Subtleties}
-Si noti che mentre il codice di inizializzazione è in esecuzione, l'indirizzio di nuova creazione esiste ma senza nessun codice corpo intrinseco. Quindi qualsiasi messaggio di chiamata ricevuto da esso durante questo periodo comporta che nessun codice venga eseguito. Se l'esecuzione di inizializzazione termina con un istruzione {\small SUICIDE}, la questione è discutibile in quanto l'account sarà eliminato prima che la transazione sia completa. Per un normale {\small STOP} codice, o se il codice restituito è altrimenti vuoto, quindi lo stato è lascaito con un account zombie, e ogni saldo rimanente sarà bloccato nell'account per sempre.
+Si noti che mentre il codice di inizializzazione è in esecuzione, l'indirizzio di nuova creazione esiste ma senza nessun codice corpo intrinseco. Quindi qualsiasi messaggio di chiamata ricevuto da esso durante questo periodo comporta che nessun codice venga eseguito. Se l'esecuzione di inizializzazione termina con un istruzione {\small SUICIDE}, la questione è discutibile in quanto l'account sarà eliminato prima che la transazione sia completa. Per un normale {\small STOP} codice, o se il codice restituito è altrimenti vuoto, quindi lo stato è lasciato con un account zombie, e ogni saldo rimanente sarà bloccato nell'account per sempre.
 
 \section{Message Call} \label{ch:call}
-In the case of executing a message call, several parameters are required: sender ($s$), transaction originator ($o$), recipient ($r$), the account whose code is to be executed ($c$, usually the same as recipient), available gas ($g$), value ($v$) and gas price ($p$) together with an arbitrary length byte array, $\mathbf{d}$, the input data of the call and finally the present depth of the message-call/contract-creation stack ($e$).
+Nel caso in cui venga eseguito un messaggio di chiamata, diversi parametri sono richiesti: mittente ($s$), chi esegue per primo la transazione ($o$), destinatario ($r$), l'account il cui codice deve essere eseguito ($c$, di solito lo stesso del ricevente), il gas disponibile ($g$), valore ($v$) ed il prezzo del gas ($p$) insieme con un insieme di dati di lunghezza arbitraria, $\mathbf{d}$, i dati di input della chuamata ed infine l'attuale profondità dello stack messaggio-chiamata/creazione del contratto ($e$).
 
-Aside from evaluating to a new state and transaction substate, message calls also have an extra component---the output data denoted by the byte array $\mathbf{o}$. This is ignored when executing transactions, however message calls can be initiated due to VM-code execution and in this case this information is used.
+A prescindere dalla valutazione di un nuovo stato e la transazione sottostato, le chiamate dei messaggi hanno anche un componente extra ---i dati di output data indicati dall'insieme di dati  $\mathbf{o}$. Questo è ingnorato quando si eseguono le transazioni, comunque le chiamate di messaggi possono essere avviate a casusa dell'esecuzione di un codice VM e in questo caso questa informazione è utilizzata.
 \begin{equation}
 (\boldsymbol{\sigma}', g', A, \mathbf{o}) \equiv \Theta(\boldsymbol{\sigma}, s, o, r, c, g, p, v, \mathbf{d}, e)
 \end{equation}
 
-We define $\boldsymbol{\sigma}_1$, the first transitional state as the original state but with the value transferred from sender to recipient:
+Definiamo $\boldsymbol{\sigma}_1$, il primo stato di transizione come lo stato originario ma con il valore trasferito dal mittente al ricevente:
 \begin{equation}
 \boldsymbol{\sigma}_1[r]_b \equiv \boldsymbol{\sigma}[r]_b + v \quad\wedge\quad \boldsymbol{\sigma}_1[s]_b \equiv \boldsymbol{\sigma}[s]_b - v
 \end{equation}
 
-Throughout the present work, it is assumed that if $\boldsymbol{\sigma}_1[r]$ was originally undefined, it will be created as an account with no code or state and zero balance and nonce. Thus the previous equation should be taken to mean:
+Attraverso il presente lavoro, si preseume che se $\boldsymbol{\sigma}_1[r]$ fosse in origine indefinito, esso sarà creato come un account con nessun codice o stato e saldo e nonce zero. Quindi la precedente equazione dovrebbe essere interpretata per significare:
 \begin{equation}
 \boldsymbol{\sigma}_1 \equiv \boldsymbol{\sigma}_1' \quad \text{except:} \\
 \end{equation}
