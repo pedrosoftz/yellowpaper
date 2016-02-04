@@ -646,11 +646,11 @@ v' \equiv \begin{cases}
 
 %It is asserted that the state database will also change such that it defines the pair $(\mathtt{\tiny KEC}(\mathbf{b}), \mathbf{b})$.
 
-Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di escuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, further accounts can be created and further message calls can be made. As such, the code execution function $\Xi$ evaluates to a tuple of the resultant state $\boldsymbol{\sigma}^{**}$, available gas remaining $g^{**}$, the accrued substate $A$ and the body code of the account $\mathbf{b}$.
+Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di escuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, ulteriori account possono essere creati e fatti altri messaggi di chiamata. In quanto tale, la funzione di esecuzione del codice $\Xi$ restituisce un insieme di dati dello stato risultante $\boldsymbol{\sigma}^{**}$, del gas disponibile rimanente $g^{**}$, il sottostato maturato $A$ ed il codice corpo dell'account $\mathbf{b}$.
 
-Code execution depletes gas; thus it may exit before the code has come to a natural halting state. In this (and several other) exceptional cases we say an Out-of-Gas exception has occurred: The evaluated state is defined as being the empty set $\varnothing$ and the entire create operation should have no effect on the state, effectively leaving it as it was immediately prior to attempting the creation. The gas remaining should be zero in any such exceptional condition. If the creation was conducted as the reception of a transaction, then this doesn't affect payment of the intrinsic cost: it is paid regardless.
+L'esecuzione del codice esaurisce il gas; quindi esso può uscire prima che il codice è giunto ad uno stato naturale di arresto. In questo (e diversi altri) casi eccezionali possiamo affermare che è avvenuta un eccezzione di Fine-del-gas: Lo stato valutato è definito come un set vuoto $\varnothing$ e l'intera operazione di creazione non dovrebbe avere effetto sullo stato, effettivamente lasciandolo così com'è immediatamente prima di tentare la creazione. Il gas rimanete dovrebbe essere zero in tali eccezionali condizioni. RIVEDI QUA Se la creazione fosse eseguita come la ricezione di una transazione, poi questo non influenzerebbe il pagamento del costo intrinseco: esso è pagato indipendentemente.
 
-If such an exception does not occur, then the remaining gas is refunded to the originator and the now-altered state is allowed to persevere. Thus formally, we may specify the resultant state, gas and substate as $(\boldsymbol{\sigma}', g', A)$ where:
+Se tale eccezione non si verifica, quindi il gas rimanente è rimborsato al mittente e lo stato ormai alterato può perdurare. Perciò formalmente, possiamo specificare lo stato risultante, gas e sottostato come $(\boldsymbol{\sigma}', g', A)$ dove:
 
 \begin{equation}
 (\boldsymbol{\sigma}^{**}, g^{**}, A, \mathbf{o}) \equiv \Xi(\boldsymbol{\sigma}^*, g, I) \\
@@ -668,7 +668,7 @@ g^{**} - c & \text{otherwise} \\
 \quad\boldsymbol{\sigma}'[a]_c = \texttt{\small KEC}(\mathbf{o}) & \text{otherwise}
 \end{cases}
 \end{eqnarray}
-Where $I$ contains the parameters of the execution environment as defined in section \ref{ch:model}.
+Dove $I$ contiene i paramentri dell'ambiente di esecuzione come definito nella sezione \ref{ch:model}.
 \begin{eqnarray}
 I_a & \equiv & a \\
 I_o & \equiv & o \\
@@ -680,12 +680,12 @@ I_\mathbf{b} & \equiv & \mathbf{i} \\
 I_e & \equiv & e
 \end{eqnarray}
 
-where $c$ is the code-deposit cost:
+dove $c$ è il costo del codice di deposito:
 \begin{equation}
 c \equiv G_{codedeposit} \times |\mathbf{o}|
 \end{equation}
 
-$I_\mathbf{d}$ evaluates to the empty tuple as there is no input data to this call. $I_H$ has no special treatment and is determined from the blockchain. The exception in the determination of $\boldsymbol{\sigma}'$ dictates that the resultant byte sequence from the execution of the initialisation code specifies the final body code for the newly-created account, with $\boldsymbol{\sigma}'[a]_c$ being the Keccak 256-bit hash of the newly created account's body code and $\mathbf{o}$ the output byte sequence of the code execution.
+$I_\mathbf{d}$ restituisce l'insieme di dati vuoto in quanto non vi sono dati di input a questa chiamata. $I_H$ non ha uno speciale trattamente ed è determinato dalla blockchain. L'eccezione nella determinazione di $\boldsymbol{\sigma}'$ impone che la sequenza di byte risultante dall'esecuzione del codice di inizializzazione spefica il codice finale del corpo per l'account di nuova creazione, con $\boldsymbol{\sigma}'[a]_c$ che è l'hash Keccak 256-bit del codice corpo dell'account di nuova creazione e $\mathbf{o}$ la sequenza di byte output dell'esecuzione del codice.
 
 No code is deposited in the state if the gas does not cover the additional per-byte contract deposit fee, however, the value is still transferred and the execution side-effects take place.
 
