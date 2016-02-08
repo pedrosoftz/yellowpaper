@@ -722,7 +722,7 @@ Attraverso il presente lavoro, si preseume che se $\boldsymbol{\sigma}_1[r]$ fos
 \end{cases}
 \end{equation}
 
-The account's associated code (identified as the fragment whose Keccak hash is $\boldsymbol{\sigma}[c]_c$) is executed according to the execution model (see section \ref{ch:model}). Just as with contract creation, if the execution halts in an exceptional fashion (i.e. due to an exhausted gas supply, stack underflow, invalid jump destination or invalid instruction), then no gas is refunded to the caller and the state is reverted to the point immediately prior to balance transfer (i.e. $\boldsymbol{\sigma}$).
+Il codice associanto con l'account (identificato come il frammento il cui hash Keccak è $\boldsymbol{\sigma}[c]_c$) è eseguito in accordo con il modello di esecuzone (si veda la sezione \ref{ch:model}). Proprio come con la creazione del contratto, se l'esecuzione si arresta in modo insolito (ad es. perchè è terminata la riserva di gas, stack underflow, destinazione invalida del salto o un'istruzione invalida), poi nessun gas è rimborsato al chiamante e lo stato torna indietro al punto immediatamente precedente al trassferimento del saldo (ad es. $\boldsymbol{\sigma}$).
 
 \begin{eqnarray}
 \boldsymbol{\sigma}' & \equiv & \begin{cases}
@@ -746,7 +746,7 @@ I_e & \equiv & e \\
 \text{Let} \; \mathtt{\tiny KEC}(I_\mathbf{b}) & = & \boldsymbol{\sigma}[c]_c
 \end{eqnarray}
 
-It is assumed that the client will have stored the pair $(\mathtt{\tiny KEC}(I_\mathbf{b}), I_\mathbf{b})$ at some point prior in order to make the determination of $I_\mathbf{b}$ feasible.
+Si presume che il client avrà memorizzato la coppia $(\mathtt{\tiny KEC}(I_\mathbf{b}), I_\mathbf{b})$ in qualche punto prima con il fine di rendere la determinazione $I_\mathbf{b}$ fattibile.
 
 As can be seen, there are four exceptions to the usage of the general execution framework $\Xi$ for evaluation of the message call: these are four so-called `precompiled' contracts, meant as a preliminary piece of architecture that may later become \textit{native extensions}. The four contracts in addresses 1, 2, 3 and 4 execute the elliptic curve public key recovery function, the SHA2 256-bit hash scheme, the RIPEMD 160-bit hash scheme and the identity function respectively.
 
