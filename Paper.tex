@@ -750,11 +750,11 @@ Si presume che il client avrà memorizzato la coppia $(\mathtt{\tiny KEC}(I_\mat
 
 Come si può vedere, ci sono quattro eccezioni all'uso del framework generale di esecuzione $\Xi$ per la valutazione del messaggio di chiamata: queste sono i così detti contratti `precompilati', inteso come un pezzo preliminare di architettura che più in avanti può diventare \textit{native extensions}. I quattro contratti nell'indirizzo 1, 2, 3 e 4 esegueno la funzione di recupero della chiave pubblica a curva ellittica, lo schema hash SHA2 256-bit, lo schema hash RIPEMD 160-bit e rispettivamente la funzione di identità.
 
-La loro piena definiziona formale è in \ref{app:precompiled}.
+La loro piena definizione formale è in \ref{app:precompiled}.
 
 \section{Execution Model} \label{ch:model}
 
-The execution model specifies how the system state is altered given a series of bytecode instructions and a small tuple of environmental data. This is specified through a formal model of a virtual state machine, known as the Ethereum Virtual Machine (EVM). It is a \textit{quasi-}Turing-complete machine; the \textit{quasi} qualification comes from the fact that the computation is intrinsically bounded through a parameter, \textit{gas}, which limits the total amount of computation done.
+Il modello di esecuzione specifica come lo stato del sistema sia alterato danto una serie di istruzioni bytecode e un piccolo insieme di dati ambientali. Questo è precisato attraverso un modello formale di una macchina di stato virtuale, conosciuto come l' Ethereum Virtual Machine (EVM). Esso è una\textit{quasi-}macchina Turing-complete; la \textit{quasi} qualifica è dovuta dal fatto che la computazione è intrinsicamente delimitata attraverso un parametro, \textit{gas}, che limita l'ammontare complessivo della computazione eseguita.
 
 \subsection{Basics}
 
