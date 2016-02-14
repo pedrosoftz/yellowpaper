@@ -760,9 +760,9 @@ Il modello di esecuzione specifica come lo stato del sistema sia alterato danto 
 
 EVM è una semplice architettura basata sullo stack. La grandezza del termine della macchina (e quindi la grandezza dell'oggetto nello stack) è di 256-bit. Questo è stato scelto per facilitare lo schema hash Keccak-256 e le cumputazioni relative alla curva ellittica. Il modello di memoria è un semplice insieme di dati RIVEDI QUA. Lo stack ha una grandezza massima di $1024$. La macchina ha anche un modello di storage indipendente; questo è concettualmente simile alla memoria  bensì che ad un insieme di dati, RIVEDI QUA it is a word-addressable word array. Al contrario della memoria, che è volatile, lo storage non lo è ed è mantenuto come una parte dello stato del sistema. Tutte le collocazioni sia nello storage che nella memoria sono inizialmente ben definite come zero.
 
-The machine does not follow the standard von Neumann architecture. Rather than storing program code in generally-accessible memory or storage, it is stored separately in a virtual ROM interactable only through a specialised instruction.
+La macchina non aderisce allo standard di architetttura Neumann. Piuttosto che memorizzare il codice del programma in una memoria o storage generalmente accessibile, esso è memorizzato seperatamente in una ROM virtuale modificabile soltanto attraverso un'istruzione specializzata.
 
-The machine can have exceptional execution for several reasons, including stack underflows and invalid instructions. Like the out-of-gas (OOG) exception, they do not leave state changes intact. Rather, the machine halts immediately and reports the issue to the execution agent (either the transaction processor or, recursively, the spawning execution environment) which will deal with it separately.
+La macchina può avere un'esecuzione eccezionale per diversi motivi, including stack underflows and invalid instructions. Like the out-of-gas (OOG) exception, they do not leave state changes intact. Rather, the machine halts immediately and reports the issue to the execution agent (either the transaction processor or, recursively, the spawning execution environment) which will deal with it separately.
 
 \subsection{Fees Overview}
 
