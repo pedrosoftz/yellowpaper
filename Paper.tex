@@ -771,7 +771,7 @@ Le commissioni (denominate in gas) sono dovute in tre distinte circostanze, tutt
 Nel corso dell'esecuzione di un account, la commissione totale esigibile per l'uso della memoria è proporzionale al più piccolo multiplo di 32 byte che sono richiesti in modo tale che tutti gli indici della memoria (sia per leggere o scrivere) sono inclusi nel range. Questo viene pagato in modo tempestivo; in quanto tale, con riferimento ad una parte della memoria di almeno 32 byte più grande di qualsiasi indicizizzata in precedenza, comporterà certamente la spendita di una commissione addizionale per l'uso della memoria. A causa di questa fee è altamente improbabile che gli indirizzi potranno mai andare al di sopra della grandezza di 32-bit. Detto ciò, le implementazioni devono essere in grado di gestire questa eventualità.
 
 Le commissioni per lo storage hanno un comportamento leggermente sfumato---per incentivare il decremento dell'uso dello storage (
-che corrisponde direttamente a un database di stato maggiore su tutti i nodi), la commissione di esecuzione per un'operazione che cancella una voce nello storage non è solo waived, a qualified refund is given; in fact, this refund is effectively paid up-front since the initial usage of a storage location costs substantially more than normal usage.
+che corrisponde direttamente ad un database di stato maggiore su tutti i nodi), la commissione di esecuzione per un'operazione che cancella una voce nello storage non è solo waived, RIVEDI QUA a qualified refund is given; infatti, questo rimborso è pagato effettivamente in anticipo in quanto l'utilizzo iniziale in una sezione di storage costa sostanzialmente di più di un utilizzo normale.
 
 %More formally, given an instruction, it is possible to calculate the gas cost of executing it as follows:
 %
@@ -794,27 +794,27 @@ che corrisponde direttamente a un database di stato maggiore su tutti i nodi), l
 %
 %Additionally, when memory is accessed with {\small MSTORE}, {\small MSTORE8}, {\small MLOAD}, {\small CALLDATACOPY}, {\small CODECOPY}, {\small RETURN}, {\small SHA3}, {\small CREATE} or {\small CALL}, the memory should be enlarged to the smallest multiple of words such that all addressed bytes now fit in it.
 
-See Appendix \ref{app:vm} for a rigorous definition of the EVM gas cost.
+Si veda Appendix \ref{app:vm} per una definizione rigorosa del costo in gas dell' EVM.
 
 %Whenever a higher memory index is referenced, the fee difference to take it to the higher usage from the original (lower) usage is charged. Notably, because {\small MSTORE} and {\small MLOAD} operate on word lengths, they implicitly increase the highest-accessed index to 31 greater than their target index.
 
 \subsection{Execution Environment}
 
-In addition to the system state $\boldsymbol{\sigma}$, and the remaining gas for computation $g$, there are several pieces of important information used in the execution environment that the execution agent must provide; these are contained in the tuple $I$:
+In aggiunta allo stato di sistema $\boldsymbol{\sigma}$, ed il gas rimanente per la computazione $g$, ci sono diversi frammenti di informazione rilevamente impiegati nell'esecuzione dell'ambinente che l'agente esecutivo deve fornire; questi sono contenuti nell'insieme di dati $I$:
 
 \begin{itemize}
-\item $I_a$, the address of the account which owns the code that is executing.
-\item $I_o$, the sender address of the transaction that originated this execution.
-\item $I_p$, the price of gas in the transaction that originated this execution.
-\item $I_\mathbf{d}$, the byte array that is the input data to this execution; if the execution agent is a transaction, this would be the transaction data.
-\item $I_s$, the address of the account which caused the code to be executing; if the execution agent is a transaction, this would be the transaction sender.
-\item $I_v$, the value, in Wei, passed to this account as part of the same procedure as execution; if the execution agent is a transaction, this would be the transaction value.
-\item $I_\mathbf{b}$, the byte array that is the machine code to be executed.
-\item $I_H$, the block header of the present block.
-\item $I_e$, the depth of the present message-call or contract-creation (i.e. the number of {\small CALL}s or {\small CREATE}s being executed at present).
+\item $I_a$, l'indirizzo dell'acccont che possiede il codice che è in esecuzione.
+\item $I_o$, l'indirizzo del mittente della transazione che ha originato questa esecuzione.
+\item $I_p$, il prezzo del gas nella transazione che ha dato vit a questa esecuzione.
+\item $I_\mathbf{d}$, l'insieme di dati che costituisce i dati di input a questa esecuzione; se l'agente esecutivo è una transazione, nquesto sarebbe i dati della transazione.
+\item $I_s$, l'indirizzo dell'account che ha dato via all'esecuzione del codice; se l'agente esecutivo è una transazione, questo sarebbe il mittente della transazione.
+\item $I_v$, il valore, in Wei, trasferito a questo account come una parte della stessa procedura di esecuzione; se l'agente dell'esecuzione è una transazione, questo sarebbe il valore della transazione.
+\item $I_\mathbf{b}$, l'insieme di dati che è il codice macchina da eseguire.
+\item $I_H$, l'intestazione del presente blocco.
+\item $I_e$, la profondità dell'attuale messaggio di chiamata o creazione del contratto (ad es. il numero di {\small CALL}s o {\small CREATE}s al momento in corso di esecuzione).
 \end{itemize}
 
-The execution model defines the function $\Xi$, which can compute the resultant state $\boldsymbol{\sigma}'$, the remaining gas $g'$, the suicide list $\mathbf{s}$, the log series $\mathbf{l}$, the refunds $r$ and the resultant output, $\mathbf{o}$, given these definitions:
+Il modello di esecuzione definisce la funzione $\Xi$, che può calcolare lo stato risultante $\boldsymbol{\sigma}'$, il gas rimanente $g'$, la lista suicidio $\mathbf{s}$, la serie di log $\mathbf{l}$, i rimborsi $r$ e l'outpout risul, $\mathbf{o}$, date queste definizioni:
 \begin{equation}
 (\boldsymbol{\sigma}', g', \mathbf{s}, \mathbf{l}, r, \mathbf{o}) \equiv \Xi(\boldsymbol{\sigma}, g, I)
 \end{equation}
