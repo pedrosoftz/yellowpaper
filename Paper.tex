@@ -821,9 +821,9 @@ Il modello di esecuzione definisce la funzione $\Xi$, che può calcolare lo stat
 
 \subsection{Execution Overview}
 
-We must now define the $\Xi$ function. In most practical implementations this will be modelled as an iterative progression of the pair comprising the full system state, $\boldsymbol{\sigma}$ and the machine state, $\boldsymbol{\mu}$. Formally, we define it recursively with a function $X$. This uses an iterator function $O$ (which defines the result of a single cycle of the state machine) together with functions $Z$ which determines if the present state is an exceptional halting state of the machine and $H$, specifying the output data of the instruction if and only if the present state is a normal halting state of the machine.
+Dobbiamo definire la funzione $\Xi$ . Nella maggior parte delle implementazioni pratiche questa dovrà essere modellata come una progressione iterativa della coppia che comprende lo stato completo del sistema, $\boldsymbol{\sigma}$ e dello stato della macchina, $\boldsymbol{\mu}$. Formalmente, lo definiamo ricorsivamente con una funzione $X$. Questo impiega una funzione iterativa $O$ (che definisce il risultato di un singolo cicolo dello stato della macchina) insieme con le funzioni $Z$ which che determinano se l'attuale stato è un stato di arresto eccezionale della macchina e $H$, specificando i dati di output dell'istruzione se e solo se lo stato presente è uno normale di arresto della macchina.
 
-The empty sequence, denoted $()$, is not equal to the empty set, denoted $\varnothing$; this is important when interpreting the output of $H$, which evaluates to $\varnothing$ when execution is to continue but a series (potentially empty) when execution should halt.
+La sequenza vuota, denota $()$, non è uguale al set vuoto, indicato $\varnothing$; questo è importante quanto si interpreta l' output di $H$, che esamina $\varnothing$ quando l'esecuzione continuna ma una serie (potenzialmente vuota) quando l'esecuzione dovrebbe arrestarsit.
 \begin{eqnarray}
 \Xi(\boldsymbol{\sigma}, g, I) & \equiv & X_{0,1,2,4}\big((\boldsymbol{\sigma}, \boldsymbol{\mu}, A^0, I)\big) \\
 \boldsymbol{\mu}_g & \equiv & g \\
@@ -840,13 +840,13 @@ X\big(O(\boldsymbol{\sigma}, \boldsymbol{\mu}, A, I)\big) & \text{otherwise}\\
 \end{cases}
 \end{equation}
 
-where
+dove
 \begin{eqnarray}
 \mathbf{o} & \equiv & H(\boldsymbol{\mu}, I) \\
 (a, b, c) \cdot d & \equiv & (a, b, c, d)
 \end{eqnarray}
 
-Note that we must drop the fourth value in the tuple returned by $X$ to correctly evaluate $\Xi$, hence the subscript $X_{0,1,2,4}$.
+Si noti che dobbiamo lasciare il quarto valore nell'insieme di dati restituito da $X$ per valutare correttamente $\Xi$, quindi il pedice $X_{0,1,2,4}$.
 
 $X$ is thus cycled (recursively here, but implementations are generally expected to use a simple iterative loop) until either $Z$ becomes true indicating that the present state is exceptional and that the machine must be halted and any changes discarded or until $H$ becomes a series (rather than the empty set) indicating that the machine has reached a controlled halt.
 
