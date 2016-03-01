@@ -848,21 +848,21 @@ dove
 
 Si noti che dobbiamo lasciare il quarto valore nell'insieme di dati restituito da $X$ per valutare correttamente $\Xi$, quindi il pedice $X_{0,1,2,4}$.
 
-$X$ is thus cycled (recursively here, but implementations are generally expected to use a simple iterative loop) until either $Z$ becomes true indicating that the present state is exceptional and that the machine must be halted and any changes discarded or until $H$ becomes a series (rather than the empty set) indicating that the machine has reached a controlled halt.
+$X$ è perciò superato un ciclo (qui ricorsivamente, ma le implementazioni sono in generale previste per essere utilizzati in un semplice loop iterativo) fino a quando $Z$ diventano vero indicando che lo stato attuale è eccezionale e che la macchina deve essere arrestata e qualsiasi cambiamento scartato o finchè $H$ diviene una serie (piuttosto che un set vuoto) indicando che la macchina ha raggiunto un halt controllato.
 
 \subsubsection{Machine State}
-The machine state $\boldsymbol{\mu}$ is defined as the tuple $(g, pc, \mathbf{m}, i, \mathbf{s})$ which are the gas available, the program counter $pc \in \mathbb{P}_{256}$ , the memory contents, the active number of words in memory (counting continuously from position 0), and the stack contents. The memory contents $\boldsymbol{\mu}_\mathbf{m}$ are a series of zeroes of size $2^{256}$.
+La macchina stato $\boldsymbol{\mu}$ è definita come un insieme di dati $(g, pc, \mathbf{m}, i, \mathbf{s})$ che sono il gas disponibile, il programma contatore $pc \in \mathbb{P}_{256}$ , il contenuto della memoria, il numero attivo di parole nella memotia (che contano continuamente dalla posizione 0), e i contenuti dello stack. I contenuti della memoria $\boldsymbol{\mu}_\mathbf{m}$ sono una seie di zere di grandezza $2^{256}$.
 
-For the ease of reading, the instruction mnemonics, written in small-caps (\eg \space {\small ADD}), should be interpreted as their numeric equivalents; the full table of instructions and their specifics is given in Appendix \ref{app:vm}.
+Per facilitare la lettura, le istruzioni mnemoniche, scritte in maiuscoletto (\eg \space {\small ADD}), dovrebbero essere interpretate come i loro equivalenti numerici; la tabella completa di istruzioni e le loro specifiche sono date in Appendix \ref{app:vm}.
 
-For the purposes of defining $Z$, $H$ and $O$, we define $w$ as the current operation to be executed:
+Per gli scopi di definire $Z$, $H$ e $O$, definiamo $w$ come la corrente operazione da eseguire:
 \begin{equation}\label{eq:currentoperation}
 w \equiv \begin{cases} I_\mathbf{b}[\boldsymbol{\mu}_{pc}] & \text{if} \quad \boldsymbol{\mu}_{pc} < \lVert I_\mathbf{b} \rVert \\
 \text{\small STOP} & \text{otherwise}
 \end{cases}
 \end{equation}
 
-We also assume the fixed amounts of $\mathbf{\delta}$ and $\mathbf{\alpha}$, specifying the stack items removed and added, both subscriptable on the instruction and an instruction cost function $C$ evaluating to the full cost, in gas, of executing the given instruction.
+Noi assumiamo anche gli ammontari fissi di $\mathbf{\delta}$ e $\mathbf{\alpha}$, specificando che gli oggetti dello stack rimossi ed aggiunti, RIVEDI QUAboth subscriptable on the instruction and an instruction cost function $C$ evaluating to the full cost, in gas, of executing the given instruction.
 
 \subsubsection{Exceptional Halting}
 
