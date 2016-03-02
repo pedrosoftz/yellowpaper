@@ -1096,41 +1096,41 @@ Per ogni blocco esiste un seed che può essere computato analizzando le intestaz
 
 Il mining comporta la selezione casuale di parti del set di dati per mescolarle insieme. La verifica può essere effettuata con poca memoria usando la cache per rigenerare le parti necessarie del set di dati, in tal modo solo la memorizzazione si limita alla cache. Il set di dati completo è aggiornato una volta ogni $J_{epoch}$ blocchi, cosicchè la grande maggioranza del lavoro di un miner sarà la lettura del set di dati e non l'apporto di modifiche ad esso. I parametri succitati così come l'algoritmo usato sono spiegati in dettaglio nell'appendice \ref{app:ethash}.
 
-\section{Implementing Contracts}
+\section{Implementazione dei contratti}
 
 Ci sono diversi tipi di ingegnerizzazione dei contratti che consentono applicazioni il cui funzionamento è di particolare utilità; due di questi sono i feed dati e i numeri casuali. 
 
 \subsection{Data Feeds}
-A data feed contract is one which provides a single service: it gives access to information from the external world within Ethereum. The accuracy and timeliness of this information is not guaranteed and it is the task of a secondary contract author---the contract that utilises the data feed---to determine how much trust can be placed in any single data feed.
+Un contratto per feed dati fornisce un singolo servizio: dà l'accesso a informazioni dal mondo esterno verso Ethereum. La precisione e tempestività di queste informazioni non è garantita ed è compito di un contratto secondario di un altro autore---il contratto che utilizza il feed dati---determinare quanta fiducia può essere riposta in un singolo feed dati.
 
-The general pattern involves a single contract within Ethereum which, when given a message call, replies with some timely information concerning an external phenomenon. An example might be the local temperature of New York City. This would be implemented as a contract that returned that value of some known point in storage. Of course this point in storage must be maintained with the correct such temperature, and thus the second part of the pattern would be for an external server to run an Ethereum node, and immediately on discovery of a new block, creates a new valid transaction, sent to the contract, updating said value in storage. The contract's code would accept such updates only from the identity contained on said server.
+Lo schema generale prevede un singolo contratto Ethereum che, quando viene fornito di un particolare  messaggio, risponde con le oppurtune informazioni riguardanti un fenomeno esterno. Un esempio potrebbe essere la temperatura locale di New York. Questo potrebbe essere implementato come un contratto che restituisce il valore voluto il quale è immagazzinato in un archivio già noto. Ovviamente il valore in archivio deve essere aggiornato con la temperatura corretta, quindi la seconda parte dello schema prevede un server esterno sul quale gira un nodo Ethereum, il quale alla scoperta di un nuovo blocco, crea una nuova e valida transazione che, spedita al contratto, provvede ad aggiornare il succitato valore presente in archivio. Il contratto accetterebbe tali aggiornamenti solo dall'identità contenuta in detto server.
 
-\subsection{Random Numbers}
-Providing random numbers within a deterministic system is, naturally, an impossible task. However, we can approximate with pseudo-random numbers by utilising data which is generally unknowable at the time of transacting. Such data might include the block's hash, the block's timestamp and the block's beneficiary address. In order to make it hard for malicious miner to control those values, one should use the {\small BLOCKHASH} operation in order to use hashes of the previous 256 blocks as pseudo-random numbers. For a series of such numbers, a trivial solution would be to add some constant amount and hashing the result.
+\subsection{Numeri Casuali}
+La produzione di numeri casuali in un sistema deterministico è, naturalmente, un compito impossibile. Tuttavia, si può approssimare tale compito utilizzando numeri pseudo-casuali utilizzando dati non noti al momento della transazione. Tali dati potrebbero includere l'hash del blocco, il timestamp del blocco e l'indirizzo del beneficiario del blocco. Al fine di rendere difficile il controllo di tali valori ad un miner malevolo, si dovrebbe usare la funzione {\small BLOCKHASH} al fine di utilizzare gli hash dei precedenti 256 blocchi come numeri pseudo-casuali. Per ottenere una serie di tali numeri, una soluzione banale potrebbe essere l'aggiunta di un certa costante e creare l'hash del risultato.
 
-\section{Future Directions} \label{ch:future}
+\section{Direttive Future}} \label{ch:future}
 
-The state database won't be forced to maintain all past state trie structures into the future. It should maintain an age for each node and eventually discard nodes that are neither recent enough nor checkpoints; checkpoints, or a set of nodes in the database that allow a particular block's state trie to be traversed, could be used to place a maximum limit on the amount of computation needed in order to retrieve any state throughout the blockchain.
+Il database di stato non verrà forzato a mantenere tutte le precedenti strutture ad albero. Si dovrebbe mantenere un tempo di attività per ciascun nodo ed eventualmente scartare i nodi che non sono nè recenti abbastanza nè checkpoints; i checkpoints, un insieme di nodi nel database che permettono di scavalcare lo stato di un blocco nella struttura ad albero, potrebbero essere usati per porre un limite massimo all'ammontare della computazione necessaria per recuperare uno stato qualsiasi nell'intera blockchain.
 
-Blockchain consolidation could be used in order to reduce the amount of blocks a client would need to download to act as a full, mining, node. A compressed archive of the trie structure at given points in time (perhaps one in every 10000th block) could be maintained by the peer network, effectively recasting the genesis block. This would reduce the amount to be downloaded to a single archive plus a hard maximum limit  of blocks.
+Il consolidamento della blockchain potrebbe essere usato al fine di ridurre l'ammontare dei blocchi da scaricare, necessari ad un client per agire come un nodo completo, in grado effettuare mining. Un archivio compresso della struttura ad albero potrebbe essere mantenuto dalla rete di peers, ad intervalli di tempo regolari (ad esempio ogni 10000 blocchi), di fatto ritrasmettendo il blocco di genesi. Ciò ridurrebbe il peso del download da parte di un singolo archivio e metterebbe un limite massimo al numero di blocchi da scaricare.
 
-Finally, blockchain compression could perhaps be conducted: nodes in state trie that haven't sent/received a transaction in some constant amount of blocks could be thrown out, reducing both Ether-leakage and the growth of the state database.
+Infine, si potrebbe conseguire la compressione della blockchain: nodi della struttura ad albero che non hanno spedito/ricevuto transazioni durante una certa quantità costante di blocchi potrebbero essere estromessi, riducendo sia [Ether-leakage(dispersione di ether?)] sia la crescita del database di stato.
 
-\subsection{Scalability}
+\subsection{Scalabilità}
 
-Scalability remains an eternal concern. With a generalised state transition function, it becomes difficult to partition and parallelise transactions to apply the divide-and-conquer strategy. Unaddressed, the dynamic value-range of the system remains essentially fixed and as the average transaction value increases, the less valuable of them become ignored, being economically pointless to include in the main ledger. However, several strategies exist that may potentially be exploited to provide a considerably more scalable protocol.
+La scalabilità è una eterna preouccupazione. Con una funzione generalizzata di transizione di stato, diventa difficile partizionare e parallelizzare le transazioni al fine di applicare una strategia del tipo divide et impera. Se ignorata, la gamma dei valori dinamica del sistema resta sostanzialmente fissa e all'aumentare del valore medio delle transazioni, quelle di minor valore tenderebbero a essere ignorate essendo economicamente inutili da includere nella blockchain principale. Tuttavia, esistono diverse strategie che possono potenzialmente essere sfruttate per fornire un protocollo molto più scalabile.
 
-Some form of hierarchical structure, achieved by either consolidating smaller lighter-weight chains into the main block or building the main block through the incremental combination and adhesion (through proof-of-work) of smaller transaction sets may allow parallelisation of transaction combination and block-building. Parallelism could also come from a prioritised set of parallel blockchains, consolidated each block and with duplicate or invalid transactions thrown out accordingly.
+Una qualche forma di struttura gerarchica, ottenuta o dal consolidamento di chain più piccole e leggere nel blocco principale, oppure dalla costruzione del blocco principale mediante l'associazione ed incrementale adesione (per mezzo del proof-of-work) di insiemi di transazioni più piccole, può consentire la parallelizzazione dell'unione delle transazioni e l'edificazione dei blocchi. Il parallelismo potrebbe anche venire da un set di blockchain parallele, a cui è assegnata una priorità, consolidate ad ogni blocco le cui transazione duplicate o non valide vengono di conseguenza scartate.
 
-Finally, verifiable computation, if made generally available and efficient enough, may provide a route to allow the proof-of-work to be the verification of final state.
+Infine, le computazioni verificabili, se rese comunemente disponibili e sufficientemente efficenti, possono fornire l'opportunità di consentire al proof-of-work di essere il sistema di verifica dello stato.
 
-\section{Conclusion} \label{ch:conclusion}
+\section{Conclusioni} \label{ch:conclusion}
 
-I have introduced, discussed and formally defined the protocol of Ethereum. Through this protocol the reader may implement a node on the Ethereum network and join others in a decentralised secure social operating system. Contracts may be authored in order to algorithmically specify and autonomously enforce rules of interaction.
+Ho introdotto, discusso e definito formalmente il protocollo di Ethereum. Mediante questo protocollo il lettore può implementare un nodo nel network di Ethereum e unirsi ad altri in un sistema operativo  decentralizzato, sicuro e sociale. I contratti possono essere creati al fine di specificare algoritmicamente ed autonomamente imporre le regole di interazione.
 
-\section{Acknowledgements}
+\section{Riconoscimenti}
 
-Important maintenance, useful corrections and suggestions were provided by a number of others from the Ethereum DEV organisation and Ethereum community at large including Christoph Jentzsch, Gustav Simonsson, Aeron Buchanan, Pawe\l{} Bylica, Jutta Steiner, Nick Savers, Viktor Tr\'{o}n, Marko Simovic and, of course, Vitalik Buterin.
+Significative manutenzioni del testo, correzioni utili e suggerimenti sono stati forniti da un certo numero di persone dall'organizzazione Ethereum DEV e dalla comunità Ethereum in generale compresi Christoph Jentzsch, Gustav Simonsson, Aeron Buchanan, Pawe\l{} Bylica, Jutta Steiner, Nick Savers, Viktor Tr\'{o}n, Marko Simovic e, ovviamente, Vitalik Buterin.
 
 \bibliography{Biblio}
 \bibliographystyle{plainnat}
