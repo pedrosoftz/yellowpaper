@@ -866,7 +866,7 @@ Noi assumiamo anche gli ammontari fissi di $\mathbf{\delta}$ e $\mathbf{\alpha}$
 
 \subsubsection{Exceptional Halting}
 
-The exceptional halting function $Z$ is defined as:
+La funzione di arresto eccezionale $Z$ è definita come:
 \begin{equation}
 Z(\boldsymbol{\sigma}, \boldsymbol{\mu}, I) \equiv
 \begin{array}[t]{l}
@@ -878,7 +878,7 @@ Z(\boldsymbol{\sigma}, \boldsymbol{\mu}, I) \equiv
 \end{array}
 \end{equation}
 
-This states that the execution is in an exceptional halting state if there is insufficient gas, if the instruction is invalid (and therefore its $\delta$ subscript is undefined), if there are insufficient stack items, if a {\small JUMP}/{\small JUMPI} destination is invalid or the new stack size would be larger then 1024. The astute reader will realise that this implies that no instruction can, through its execution, cause an exceptional halt.
+Questi stati dove l'esecuzione si trova in uno stato di arresto eccezionale se c'è un gas insufficiente, se l'istruzione è invalida (e quindi il suo $\delta$ pedice è indefinito), se ci sono oggetti stack insufficienti, se una {\small JUMP}/{\small JUMPI} destinazione è invalida o la grandezza del nuovo stack sarebbe più grande di 1024. Il lettore attento realizzerà che questo implica che nessuna istruzione può, attraverso la propria esecuzione, causare un arresto eccezionale.
 
 \subsubsection{Jump Destination Validity}
 
