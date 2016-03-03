@@ -952,21 +952,21 @@ Comunque, le istruzioni alterano tipicamente una o più componenti di questi val
 
 \section{Blocktree to Blockchain} \label{ch:ghost}
 
-The canonical blockchain is a path from root to leaf through the entire block tree. In order to have consensus over which path it is, conceptually we identify the path that has had the most computation done upon it, or, the \textit{heaviest} path. Clearly one factor that helps determine the heaviest path is the block number of the leaf, equivalent to the number of blocks, not counting the unmined genesis block, in the path. The longer the path, the greater the total mining effort that must have been done in order to arrive at the leaf. This is akin to existing schemes, such as that employed in Bitcoin-derived protocols.
+La blockchain canonica è un perscorso dalla radice alla foglia attraverso l'intero albero dei blocchi. Con il fine di ottenere consenso su quale percorso sia, identifichiamo concenttualmente quello che ha avuto la maggior parte della computazione eseguito su di esso, o, il percorso più \textit{heaviest} . Chiaramente un fattore che aiuta a determinare il percorso più forte è il numero del blocco della foglia, equivalente al numero di blocchi, non contando il blocck di genesi non minato, nel percorso. Più lungo è il percoso, più grande lo sforzo di mining totale che deve essere svolto con il fine di arrivare alla foglia. Questo è simile agli schemi esistenti, come quello utilizzato nei protocolli derivati dal Bitcoin.
 
-Since a block header includes the difficulty, the header alone is enough to validate the computation done. Any block contributes toward the total computation or \textit{total difficulty} of a chain.
+Visto che l'intestazione del blocco include la difficoltà, l'intestazione da sola è sufficiente per validare la computazione eseguita. Qualsiasi blocco contribuisce per la computazione totale o \textit{total difficulty} della chain.
 
-Thus we define the total difficulty of block $B$ recursively as:
+Quindi definiamo la difficoltà totale del blocco $B$ ricorsivamente come:
 \begin{eqnarray}
 B_t & \equiv & B'_t + B_d \\
 B' & \equiv & P(B_H)
 \end{eqnarray}
 
-As such given a block $B$, $B_t$ is its total difficulty, $B'$ is its parent block and $B_d$ is its difficulty.
+Come tale dato un blocco $B$, $B_t$ è la propria difficoltà totale, $B'$ è il suo blocco genitore e $B_d$ è la propria difficoltà.
 
 \section{Block Finalisation} \label{ch:finalisation}
 
-The process of finalising a block involves four stages:
+Il processo di finalizzazione di un blocco necessita 4 fasi:
 
 \begin{enumerate}
 \item Validate (or, if mining, determine) ommers;
