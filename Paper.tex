@@ -882,16 +882,16 @@ Questi stati dove l'esecuzione si trova in uno stato di arresto eccezionale se c
 
 \subsubsection{Jump Destination Validity}
 
-We previously used $D$ as the function to determine the set of valid jump destinations given the code that is being run. We define this as any position in the code occupied by a {\small JUMPDEST} instruction.
+Abbiamo impiegato in precedenza $D$ come la funzione per determinare il set di un salto valido di destinazioni dato il codice che  è in esecuzione. Definiamo questo come qualsiasi posizione nel codice occupato da una istruzione {\small JUMPDEST}.
 
-All such positions must be on valid instruction boundaries, rather than sitting in the data portion of {\small PUSH} operations and must appear within the explicitly defined portion of the code (rather than in the implicitly defined {\small STOP} operations that trail it).
+Tutte le suddette posizioni devono essere entro i limiti di istruzioni valide, piuttosto che essere presenti nella porzione di dati di {\small PUSH} operazioni e devono apparire entro la porzione espressamente definita del codice (piuttosto che nelle operazioni implicitamente definite {\small STOP} che la tracciano RIVEDI QUA).
 
-Formally:
+Formalmente:
 \begin{equation}
 D(\mathbf{c}) \equiv D_J(\mathbf{c}, 0)
 \end{equation}
 
-where:
+dove:
 \begin{equation}
 D_J(\mathbf{c}, i) \equiv \begin{cases}
 \{\} & \text{if} \quad i \geqslant |\mathbf{c}|  \\
@@ -900,7 +900,7 @@ D_J(\mathbf{c}, N(i, \mathbf{c}[i])) & \text{otherwise} \\
 \end{cases}
 \end{equation}
 
-where $N$ is the next valid instruction position in the code, skipping the data of a {\small PUSH} instruction, if any:
+dove $N$ è la prossima posizione dell'istruzione valida nel codicee, saltando i dati di un {\small PUSH} istruzione, se qualsiasi:
 \begin{equation}
 N(i, w) \equiv \begin{cases}
 i + w - \text{\small PUSH1} + 2 & \text{if} \quad w \in [\text{\small PUSH1}, \text{\small PUSH32}] \\
@@ -909,7 +909,7 @@ i + 1 & \text{otherwise} \end{cases}
 
 \subsubsection{Normal Halting}
 
-The normal halting function $H$ is defined:
+La funzione di arresto normale $H$ è definita:
 \begin{equation}
 H(\boldsymbol{\mu}, I) \equiv \begin{cases}
 H_{\text{\tiny RETURN}}(\boldsymbol{\mu}) & \text{if} \quad w = \text{\small RETURN} \\
@@ -918,11 +918,11 @@ H_{\text{\tiny RETURN}}(\boldsymbol{\mu}) & \text{if} \quad w = \text{\small RET
 \end{cases}
 \end{equation}
 
-The data-returning halt operation, \text{\small RETURN}, has a special function $H_{\text{\tiny RETURN}}$, defined in Appendix \ref{app:vm}.
+L'operazione di arresto del ritorno dei dati, \text{\small RETURN}, ha una funzione speciale $H_{\text{\tiny RETURN}}$, definita in Appendix \ref{app:vm}.
 
 \subsection{The Execution Cycle}
 
-Stack items are added or removed from the left-most, lower-indexed portion of the series; all other items remain unchanged:
+Gli oggetti dello stack sono aggiunti o rimossi dalla porzione più a sinistra ed inferiormente indicizzata delle serie; tutti gli altri oggetti rimangono inalterati:
 \begin{eqnarray}
 O\big((\boldsymbol{\sigma}, \boldsymbol{\mu}, A, I)\big) & \equiv & (\boldsymbol{\sigma}', \boldsymbol{\mu}', A', I) \\
 \Delta & \equiv & \mathbf{\alpha}_w - \mathbf{\delta}_w \\
@@ -930,7 +930,7 @@ O\big((\boldsymbol{\sigma}, \boldsymbol{\mu}, A, I)\big) & \equiv & (\boldsymbol
 \quad \forall x \in [\mathbf{\alpha}_w, \lVert\boldsymbol{\mu}'_\mathbf{s}\rVert): \boldsymbol{\mu}'_\mathbf{s}[x] & \equiv & \boldsymbol{\mu}_\mathbf{s}[x+\Delta]
 \end{eqnarray}
 
-The gas is reduced by the instruction's gas cost and for most instructions, the program counter increments on each cycle, for the three exceptions, we assume a function $J$, subscripted by one of two instructions, which evaluates to the according value:
+Il gas è ridotto dal costo del gas dell'istruzione e per la maggioranza delle istruzioni, il programma contatore incrementa in ogni ciclo, per le tre eccezioni, assumiamo una funzione $J$, sottoscritta da una o due istruzioni, che valuta il valore in base:
 \begin{eqnarray}
 \quad \boldsymbol{\mu}'_{g} & \equiv & \boldsymbol{\mu}_{g} - C(\boldsymbol{\sigma}, \boldsymbol{\mu}, I) \\
 \quad \boldsymbol{\mu}'_{pc} & \equiv & \begin{cases}
@@ -940,7 +940,7 @@ N(\boldsymbol{\mu}_{pc}, w) & \text{otherwise}
 \end{cases}
 \end{eqnarray}
 
-In general, we assume the memory, suicide list and system state don't change:
+In generale, assumiamo che la memoria, la lista suicidio e lo stato del sistema non cambino:
 \begin{eqnarray}
 \boldsymbol{\mu}'_\mathbf{m} & \equiv & \boldsymbol{\mu}_\mathbf{m} \\
 \boldsymbol{\mu}'_i & \equiv & \boldsymbol{\mu}_i \\
@@ -948,7 +948,7 @@ A' & \equiv & A \\
 \boldsymbol{\sigma}' & \equiv & \boldsymbol{\sigma}
 \end{eqnarray}
 
-However, instructions do typically alter one or several components of these values. Altered components listed by instruction are noted in Appendix \ref{app:vm}, alongside values for $\alpha$ and $\delta$ and a formal description of the gas requirements.
+Comunque, le istruzioni alterano tipicamente una o più componenti di questi valori. I componenti alterati elencati da l'istruzioni sono illustrate in Appendix \ref{app:vm}, al fianco di valori per $\alpha$ e $\delta$ ed una descrizione formale dei requsiti del gas.
 
 \section{Blocktree to Blockchain} \label{ch:ghost}
 
