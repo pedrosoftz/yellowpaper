@@ -977,12 +977,12 @@ Il processo di finalizzazione di un blocco necessita 4 fasi:
 
 \subsection{Ommer Validation}
 
-The validation of ommer headers means nothing more than verifying that each ommer header is both a valid header and satisfies the relation of $N$th-generation ommer to the present block where $N \leq 6$. The maximum of ommer headers is two. Formally:
+La validazione delle intestazioni ommer significa niente di più che il verificare che ogni intestazione ommer e sia valida e sia soddisfa la relazione di of $N$th-generation ommer al presente blocco dove $N \leq 6$. Il massimo di intestazioni ommer è due. Formalmente:
 \begin{equation}
 \lVert B_\mathbf{U} \rVert \leqslant 2 \bigwedge_{U \in B_\mathbf{U}} V(U) \; \wedge \; k(U, P(B_H), 6)
 \end{equation}
 
-where $k$ denotes the ``is-kin'' property:
+dove  $k$ denota la proprietà ``is-kin'':
 \begin{equation}
 k(U, H, n) \equiv \begin{cases} false & \text{if} \quad n = 0 \\ 
 s(U, H) &\\
@@ -990,11 +990,11 @@ s(U, H) &\\
 \end{cases}
 \end{equation}
 
-and $s$ denotes the ``is-sibling'' property:
+e  $s$ denota la proprietà ``is-sibling'':
 \begin{equation}
 s(U, H) \equiv (P(H) = P(U)\; \wedge \; H \neq U \; \wedge \; U \notin B(H)_\mathbf{U})
 \end{equation}
-where $B(H)$ is the block of the corresponding header $H$.
+dove  $B(H)$ è il blocco dell'intestazione corrispondente $H$.
 
 \subsection{Transaction Validation}
 
