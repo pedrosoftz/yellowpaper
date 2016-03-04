@@ -1041,16 +1041,16 @@ B'_n & = & n: \quad x \leqslant \frac{2^{256}}{H_d} \\
 B'_m & = & m \quad \text{with } (x, m) = \mathtt{PoW}(B^*_{\hcancel{n}}, n, \mathbf{d}) \\
 B^* & \equiv & B \quad \text{except:} \quad B'_r = r(\Pi(\Gamma(B), B))
 \end{eqnarray}
-With $\mathbf{d}$ being a dataset as specified in appendix \ref{app:ethash}.
+Con $\mathbf{d}$ essedo un set di dati come specificato in appendice \ref{app:ethash}.
 
-As specified at the beginning of the present work, $\Pi$ is the state-transition function, which is defined in terms of $\Omega$, the block finalisation function and $\Upsilon$, the transaction-evaluation function, both now well-defined.
+Come specificato all'inizio del presente lavoro, $\Pi$ è la funzione di transizione di stato, che è definita nei termini di $\Omega$, la funzione di finalizzazione del bocco e $\Upsilon$, la funzione di valutazione della transazione, entrambe adesso ben definite.
 
-As previously detailed, $\mathbf{R}[n]_{\boldsymbol{\sigma}}$, $\mathbf{R}[n]_\mathbf{l}$ and $\mathbf{R}[n]_u$ are the $n$th corresponding states, logs and cumulative gas used after each transaction ($\mathbf{R}[n]_b$, the fourth component in the tuple, has already been defined in terms of the logs). The former is defined simply as the state resulting from applying the corresponding transaction to the state resulting from the previous transaction (or the block's initial state in the case of the first such transaction):
+Come è stato spiegato precedentemente in dettaglio, $\mathbf{R}[n]_{\boldsymbol{\sigma}}$, $\mathbf{R}[n]_\mathbf{l}$ e $\mathbf{R}[n]_u$ sono i $n$th stati corrispondenti, log e gas cumulativo impiegato dopo ogni transazione ($\mathbf{R}[n]_b$, il quarto componente nell'insieme di dati, è stato già definito in termini dei log). Il precendente è definito semplicmente come lo stato risultante dall'applicare la transazione corrispondente allo stato risultante dalle precenente transazione (o lo stato iniziale del bocclo nel caso della prima transazione):
 \begin{equation}
 \mathbf{R}[n]_{\boldsymbol{\sigma}} = \begin{cases} \Gamma(B) & \text{if} \quad n < 0 \\ \Upsilon(\mathbf{R}[n - 1]_{\boldsymbol{\sigma}}, B_\mathbf{T}[n]) & \text{otherwise} \end{cases}
 \end{equation}
 
-In the case of $B_\mathbf{R}[n]_u$, we take a similar approach defining each item as the gas used in evaluating the corresponding transaction summed with the previous item (or zero, if it is the first), giving us a running total:
+Nel caso di  $B_\mathbf{R}[n]_u$, ci poniamo con un simile approccio definendo ogni oggetto come il gas impiegato nella valutazione della transazione corrispondente sommato con l'oggetto prcedente (o zero, se è il primo), dando a noi un totale in esecuzione:
 \begin{equation}
 \mathbf{R}[n]_u = \begin{cases} 0 & \text{if} \quad n < 0 \\
 \begin{array}[b]{l}
@@ -1059,18 +1059,18 @@ In the case of $B_\mathbf{R}[n]_u$, we take a similar approach defining each ite
  & \text{otherwise} \end{cases}
 \end{equation}
 
-For $\mathbf{R}[n]_\mathbf{l}$, we utilise the $\Upsilon^\mathbf{l}$ function that we conveniently defined in the transaction execution function.
+Per  $\mathbf{R}[n]_\mathbf{l}$, utilizziamo la funzione $\Upsilon^\mathbf{l}$ che definisce convenzionalmente la funzione di esecuzione della transazione.
 \begin{equation}
 \mathbf{R}[n]_\mathbf{l} = 
 \Upsilon^\mathbf{l}(\mathbf{R}[n - 1]_{\boldsymbol{\sigma}}, B_\mathbf{T}[n])
 \end{equation}
 
-Finally, we define $\Pi$ as the new state given the block reward function $\Omega$ applied to the final transaction's resultant state, $\ell(B_\mathbf{R})_{\boldsymbol{\sigma}}$:
+Ingine, definiamo $\Pi$ come il nuovo stato data la funzione di premio del blocco $\Omega$ applicata allo stato risultante della transazionne finale, $\ell(B_\mathbf{R})_{\boldsymbol{\sigma}}$:
 \begin{equation}
 \Pi(\boldsymbol{\sigma}, B) \equiv \Omega(B, \ell(\mathbf{R})_{\boldsymbol{\sigma}})
 \end{equation}
 
-Thus the complete block-transition mechanism, less $\mathtt{PoW}$, the proof-of-work function is defined.
+Perciò il meccaniscmo completo della transizione del blocco, meno $\mathtt{PoW}$, la funzione proof-of-work è definita.
 
 \subsection{Mining Proof-of-Work} \label{ch:pow}
 
