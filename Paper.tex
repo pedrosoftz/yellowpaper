@@ -1000,14 +1000,14 @@ dove  $B(H)$ è il blocco dell'intestazione corrispondente $H$.
 
 %where $s[i]$ equals the root of the state trie immediately after the execution of the transaction $B_\mathbf{T}[i]$, and $g[i]$ the total gas used immediately after said transaction.
 
-The given \textbf{gasUsed} must correspond faithfully to the transactions listed: ${B_H}_u$, the total gas used in the block, must be equal to the accumulated gas used according to the final transaction:
+Il dato \textbf{gasUsed} deve corrispondere fedelmente alle transazioni elencate: ${B_H}_u$, il gas totale impiegato nel blocco, deve essere uguale al gas accumulato in accordo con la transazione finale:
 \begin{equation}
 {B_H}_g = \ell(\mathbf{R})_u
 \end{equation}
 
 \subsection{Reward Application}
 
-The application of rewards to a block involves raising the balance of the accounts of the beneficiary address of the block and each ommer by a certain amount. We raise the block's beneficiary account by $R_b$; for each ommer, we raise the block's beneficiary by an additional $\frac{1}{32}$ of the block reward and the beneficiary of the ommer gets rewarded depending on the block number. Formally we define the function $\Omega$:
+L'applicazione dei premi ad un blocco comporta l'aumento del saldo dei conti degl indirizzi beneficiari del blocco e di ogni ommer di una certa quantità. Incrementianmo l'account beneficiario del blocco di $R_b$; per ogni ommer, aumentiamo il benificiario del blocco di un addizionale $\frac{1}{32}$ del premio del blocco ed il beneificiario dell'ommer viene premiato in dipendenza del numero del blocco. Formalmente definiamo la funzione $\Omega$:
 \begin{eqnarray}
 \Omega(B, \boldsymbol{\sigma}) & \equiv & \boldsymbol{\sigma}': \boldsymbol{\sigma}' = \boldsymbol{\sigma} \quad \text{except:} \\
 \boldsymbol{\sigma}'[{B_H}_c]_b & = & \boldsymbol{\sigma}[{B_H}_c]_b + (1 + \frac{|B_\mathbf{U}|}{32})R_b \\
@@ -1015,16 +1015,16 @@ The application of rewards to a block involves raising the balance of the accoun
  \boldsymbol{\sigma}'[U_c]_b & = & \boldsymbol{\sigma}[U_c]_b + (1 + \frac{1}{8} (U_i - {B_H}_i)) R_b 
 \end{eqnarray}
 
-If there are collisions of the beneficiary addresses between ommers and the block (i.e. two ommers with the same beneficiary address or an ommer with the same beneficiary address as the present block), additions are applied cumulatively.
+Se ci sono conflitti degli indirizzi del beneficiario tra gli ommer ed il blocco (ad es. due ommer con lo stesso indirizzo del benificiario o un ommer con lo stesso indirizzo del benificiario come il blocco attuale), le addizioni sono applicate cumulativamente.
 
-We define the block reward as 5 Ether:
+Definiamo il premio del blocco come 5 Ether:
 \begin{equation}
 \text{Let} \quad R_b = 5 \times 10^{18}
 \end{equation}
 
 \subsection{State \& Nonce Validation}\label{sec:statenoncevalidation}
 
-We may now define the function, $\Gamma$, that maps a block $B$ to its initiation state:
+Possiamo definire adesso la funzione, $\Gamma$, che mappa un blocco $B$ al prioprio stato di iniziazione:
 \begin{equation}
 \Gamma(B) \equiv \begin{cases}
 \boldsymbol{\sigma}_0 & \text{if} \quad P(B_H) = \varnothing \\
@@ -1032,9 +1032,9 @@ We may now define the function, $\Gamma$, that maps a block $B$ to its initiatio
 \end{cases}
 \end{equation}
 
-Here, $\mathtt{\small TRIE}(L_S(\boldsymbol{\sigma}_i))$ means the hash of the root node of a trie of state $\boldsymbol{\sigma}_i$; it is assumed that implementations will store this in the state database, trivial and efficient since the trie is by nature an immutable data structure.
+Qui, $\mathtt{\small TRIE}(L_S(\boldsymbol{\sigma}_i))$ significa l'hash del nodo radice di una struttura di stato $\boldsymbol{\sigma}_i$; si preseume che le implementazioni immagazineranno questo nel database di stato, banale ed efficiente visto che la struttura per sua natura è una con i dati immutabile.
 
-And finally define $\Phi$, the block transition function, which maps an incomplete block $B$ to a complete block $B'$:
+E alla infine definiamo $\Phi$, la funzione di transizione del blocco, che mappa un blocco incompleto $B$ ad uno completo $B'$:
 \begin{eqnarray}
 \Phi(B) & \equiv & B': \quad B' = B^* \quad \text{except:} \\
 B'_n & = & n: \quad x \leqslant \frac{2^{256}}{H_d} \\
