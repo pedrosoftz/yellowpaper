@@ -101,9 +101,9 @@ Ethereum, nel suo complesso, può essere visto come una macchina di stato basata
 
 dove $\Upsilon$ è la funzione di transazione di stato di Ethereum. In Ethereum, $\Upsilon$, insieme a $\boldsymbol{\sigma}$ sono di gran lunga più efficaci che qualsiasi altro sistema comparabile; $\Upsilon$ consente ai componenti di trasportare una computazione arbitraria, mentre $\boldsymbol{\sigma}$ permette ai componenti di memorizzare uno stato arbitrario tra le transazioni.
 
-Queste ultime sono collocate all'interno del blocchi; che sono concatenati l'uno con l'altro usando un hash crittografico come strumento di riferimento. La funzione dei blocchi come un giornale, che registra unitariamente una serie di transazioni con il blocco precedente e che funge da identificatore dello stato finale (anche se effettua se stesso lo storing dello stato ---in quanto sarebbe troppo grande). Essi hanno anche contraddistinto le serie della transazione con gli incentivi per i nodi per \textit{mine}. Questa incentivazione ha luogo come una funzione di trasizione di stato, aggiungendo valore all'account desginato.
+Queste ultime sono collocate all'interno del blocchi; che sono concatenati l'uno con l'altro usando un hash crittografico come strumento di riferimento. La funzione dei blocchi è come un giornale, che registra unitariamente una serie di transazioni con il blocco precedente e che funge da identificatore dello stato finale (anche se effettua se stesso lo storing dello stato ---in quanto sarebbe troppo grande). Essi hanno anche contraddistinto le serie della transazione con gli incentivi per i nodi per \textit{mine}. Questa incentivazione ha luogo, aggiungendo valore all'account desginato, come una funzione di trasizione di stato.
 
-Mining è il processo di dedicare uno sforzo computazione (working) per supportare una serie di transazioni (un blocco) rispetto ad un altro qualsiasi blocco in competizione. Esso è ottenuto grazie una prova crittografica sicura. Questo schema è conosciuto come proof-of-work ed è discusso in dettaglio nella sezione \ref{ch:pow}.
+Mining è il processo di convogliare uno sforzo computazione (working) per supportare una serie di transazioni (un blocco) rispetto ad un altro qualsiasi blocco in competizione. Esso è ottenuto grazie una prova crittografica sicura. Questo schema è conosciuto come proof-of-work ed è discusso in dettaglio nella sezione \ref{ch:pow}.
 
 Formalmente, integriamo:
 \begin{eqnarray}
@@ -116,9 +116,9 @@ Dove $\Omega$ è la funzione di transazione di stato della finalizzazione del bl
 
 Questa è la base del paradigma blockchain, un modello che forma la spina dorsale non solo di Ethereum, ma di tutti i sistemi attuali decentralizzati basati sul consenso.
 
-\subsection{Value}
+\subsection{Valore}
 
-Con il fine di incentivare la computazione attaverso il network, c'è bisongo di un metodo concordato per trasmettere valore. Per ottenere questo fine, Ethereum ha una moneta essenziale, Ether, conosciuta anche come {\small ETH} e a volte con riferimento all'inglese classico \DH{}. La più piccola subdenominazione di Ether, e quindi quello nel quale tutti i valori integri della moneta sono contati, è il Wei. Un Ether è definito come essere $10^{18}$ Wei. Esistono altre subdenominazioni di Ether:
+Con il fine di incentivare la computazione attaverso il network, c'è bisongo di un metodo concordato per trasmettere valore. Per ottenere questo fine, Ethereum ha una moneta essenziale, Ether, conosciuta anche come {\small ETH} e a volte con riferimento all'inglese classico \DH{}. La più piccola subdenominazione di Ether, e quindi quella nel quale tutti i valori integri della moneta sono contati, è il Wei. Un Ether è definito come essere $10^{18}$ Wei. Esistono altre subdenominazioni di Ether:
 \par
 \begin{center}
 \begin{tabular}{rl}
@@ -136,15 +136,15 @@ $10^{18}$ & Ether \\
 
 Attraverso il presente lavoro, qualsiasi riferimento al valore, nel contesto di Ether, moneta, un saldo o un pagamento, dovrebbe essere assunto di essere conteggiato in Wei.
 
-\subsection{Which History?}
+\subsection{Quale Storia ?}
 
 Dato che il sistema è decentralizzato e tutte le parti hanno un'opportunità di creare un nuovo blocco su qualche blocco più vecchio preestinte, la struttura risultante è necessariamente un "albero" di blocchi. Affinchè si formi un consenso su quale percorso, dalla radice (il blocco di genesi) fino alla foglia (il blocco che contiene le transazioni più recenti) attraverso questa struttura ad albero, conosciuto come blockchain, ci deve essere uno schema su cui ci sia un accordo. Se ci fosse mai un disaccordo tra i nodi su quale percorso, dalla radice alla foglia attraverso l'albero dei blocchi, sia la `migliore' blockchain, ciò comporterebbe \textit{fork} .
 
-Questo significherebbe che nel passato rispetto ad un punto dato (blocco), potrebbero coesistere molteplici stati del sistema: qualche nodo potrebbe credere che un blocco contenga le canoniche transazioni, altri nodi invece che siano leggittimi altri blocchi, contenenti potenzialmente transazioni radicalmente differenti od incompatibili. Questo deve essere evitato a tutti i costi e l'invertezza che ne deriberebbe potrebbe probabilmente deteriore tutta la fiducia nell'intero sistema.
+Questo significherebbe che nel passato rispetto ad un punto dato (blocco), potrebbero coesistere molteplici stati del sistema: qualche nodo potrebbe credere che un blocco contenga le canoniche transazioni, altri nodi invece che siano leggittimi altri blocchi, contenenti potenzialmente transazioni radicalmente differenti od incompatibili. Questo deve essere evitato a tutti i costi e l'incertezza che ne deriberebbe potrebbe probabilmente rendere deteriore tutta la fiducia nell'intero sistema.
 
 Lo schema che utilizziamo in ordine di generare consenso è una versione semplificata del protoccolo GHOST introdotto da \cite{cryptoeprint:2013:881}. Questo processo è descritto in dettaglio nella sezione \ref{ch:ghost}.
 
-\section{Conventions}\label{ch:conventions}
+\section{Convenzioni}\label{ch:conventions}
 
 Uso un numero di convenzioni tipografiche per la notazione formale, qualcuna delle quali è piuttosto presente nel presente scritto:
 
