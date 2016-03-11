@@ -182,23 +182,23 @@ Avendo introdotto i concentti basici dietro Ethereum, discuteremo il significato
 
 \subsection{Stato Globale} \label{ch:state}
 
-Lo stato globale (\textit{state}), è una mappatura tra gli indirizzi (identificatori a 160-bit) e gli stati dell'account (una struttura di dati serializzata come RLP, vedere Appendix \ref{app:rlp}). Sebben non registrata sulla blockchain, si presume che l' implementazione manterrà questa mappatura in un albero Merkle Patricia modificato (\textit{trie}, si veda Appendix \ref{app:trie}). L'abero richiede un semplice database in backend che conserva la mappatura dei bytearrays ai bytearrays; nominiamo questo database sottostante il database di stato. Questo ha un numero di benefici; per primo il nodo alla base di questa struttura è crittograficamente dipendente nei confronti di tutti i dati interni ed in quanto tale il proprio hash può essere utilizzato come una identità sicura per l'intero sistema di stato. Secondariamente, essendo una struttura immutabile di dati, permette a qualunque stato precedente( il cui hash di radice è noto) di essere richiamato semplicimente alterando l'hash di root in base ad un accordo. Poichè prendiamo nota di tutti quesi hash di root nella blockchain, siamo capaci inventire in maniera banale i vecchi stati.
+Lo stato globale (\textit{state}), è una mappatura tra gli indirizzi (identificatori a 160-bit) e gli stati dell'account (una struttura di dati serializzata come RLP, vedere Appendix \ref{app:rlp}). Sebben non registrata sulla blockchain, si presume che l' implementazione manterrà questa mappatura in un albero Merkle Patricia modificato (\textit{trie}, si veda Appendix \ref{app:trie}). L'albero richiede un semplice database in backend che conserva la mappatura RIVEDI QUA dei bytearrays ai bytearrays; chiamiamo questo database sottostante il database di stato. Ciò comporta un numero di benefici; per prima cosa il nodo alla base di questa struttura è crittograficamente dipendente nei confronti di tutti i dati interni ed, in quanto tale, il proprio hash può essere utilizzato come un' identità sicura per l'intero sistema di stato. Secondariamente, essendo una struttura immutabile di dati, permette a qualunque stato precedente ( il cui hash di radice è noto) di essere richiamato semplicimente alterando l'hash di root in base ad un accordo. Poichè prendiamo nota di tutti quesi hash di root nella blockchain, siamo capaci di RIVEDI QUA inventire in maniera banale i vecchi stati.
 
 Lo stato dell'account comprende i quattro campi che seguomo:
 
 \begin{description}
-\item[nonce] Un valore scalare uguale al numero delle transazioni spedite da questo indirizzo o, nel caso di account con un codice associatom il numero di creazioni di contratto fatto da questo account. Per account di indirizzi $a$ nello stato $\boldsymbol{\sigma}$, questo potrebbe essere formalmente caratterizzato $\boldsymbol{\sigma}[a]_n$.
+\item[nonce] Un valore scalare uguale al numero delle transazioni spedite da questo indirizzo o, nel caso di account con un codice associato il numero di creazioni di contratto fatto da questo account. Per account di indirizzi $a$ nello stato $\boldsymbol{\sigma}$, questo potrebbe essere formalmente caratterizzato $\boldsymbol{\sigma}[a]_n$.
 \item[balance] Un valore scalare uguale al numero di Wei posseduto da questo indirizzo. Formalmente denotato $\boldsymbol{\sigma}[a]_b$.
 \item[storageRoot] Un hash a  256-bit del nodo di radice di un albero Merkle Patricia che codifica il contenuto in storage dell' account (una mappatura tra valori interi a 256-bit), condificati in una struttura come una mappatura dall'hash Keccak 256-bit delle chiavi a valori interi a 256-bit codificati in RLP. L'hash è formalmente caratterizzato $\boldsymbol{\sigma}[a]_s$.
-\item[codeHash] L'hash del codice EVM code di questo account---questo è il codice che viene eseguito se questo indirizzo riceve un messaggio di chiamata; esso è immutabile e quindi, a differenza di tutti gli altri campi, non può essere cambiato dopo la sua compilazione. Tutti questi frammenti di condice sono contenuti nel database dello stato all'interno degli hash corrispondenti per il successivo recuperto. Questo hash è formalmente denotato $\boldsymbol{\sigma}[a]_c$, e per tanto il codice può essere indicato come $\mathbf{b}$, dato questo $\texttt{\small KEC}(\mathbf{b}) = \boldsymbol{\sigma}[a]_c$.
+\item[codeHash] L'hash del codice EVM code di questo account---questo è il codice che viene eseguito se questo indirizzo riceve un messaggio di chiamata; esso è immutabile e quindi, a differenza di tutti gli altri campi, non può essere cambiato dopo la sua compilazione. Tutti questi frammenti di codice sono contenuti nel database dello stato all'interno degli hash corrispondenti per il successivo RIVEDI QUA recuperto. Questo hash è formalmente denotato $\boldsymbol{\sigma}[a]_c$, e per tanto il codice può essere indicato come $\mathbf{b}$, dato questo $\texttt{\small KEC}(\mathbf{b}) = \boldsymbol{\sigma}[a]_c$.
 \end{description}
 
-Dato che solitamente mi augro di riferirmi non all'hash della radice della struttura ma al sottostante set di coppie di chiave/valore memorizzate all'interno, definisco un'equivalenza conveniente:
+Dato che solitamente mi augro di riferirmi non all'hash della radice della struttura, ma al sottostante set di coppie di chiave/valore memorizzate all'interno, definisco un'equivalenza conveniente:
 \begin{equation}
 \texttt{\small TRIE}\big(L_I^*(\boldsymbol{\sigma}[a]_\mathbf{s})\big) \equiv \boldsymbol{\sigma}[a]_s
 \end{equation}
 
-La funzione di crollo per il set delle coppie chiave/valore nella struttura, $L_I^*$, è definita come la trasformazione elemento per elemento della funzione di base $L_I$, data come:
+La funzione di crollo per il set delle coppie chiave/valore nella struttura, $L_I^*$, è definita come la trasformazione, elemento per elemento, della funzione di base $L_I$, data come:
 \begin{equation}
 L_I\big( (k, v) \big) \equiv \big(\texttt{\small KEC}(k), \texttt{\small RLP}(v)\big)
 \end{equation}
@@ -221,7 +221,7 @@ dove
 p(a) \equiv  \big(\texttt{\small KEC}(a), \texttt{\small RLP}\big( (\boldsymbol{\sigma}[a]_n, \boldsymbol{\sigma}[a]_b, \boldsymbol{\sigma}[a]_s, \boldsymbol{\sigma}[a]_c) \big) \big)
 \end{equation}
 
-Questa funzione, $L_S$, viene utilizzata insieme alla funzione di struttura per fornire una breve identità (hash) dello stato globalew. Noi riteniamo:
+Questa funzione, $L_S$, viene utilizzata insieme alla funzione di struttura per fornire una breve identità (hash) dello stato globale. Noi riteniamo:
 \begin{equation}
 \forall a: \boldsymbol{\sigma}[a] = \varnothing \; \vee \; (a \in \mathbb{B}_{20} \; \wedge \; v(\boldsymbol{\sigma}[a]))
 \end{equation}
@@ -232,7 +232,7 @@ dove $v$ è la funzione di validità dell'account:
 
 \subsection{The Transaction} \label{ch:transaction}
 
-Una transazione (formalmente, $T$) è una singola instruzione, firmata crittograficamente dall'esterno verso l'ambiente di Ethereum. Mentre si presume che l'ultimo attore esterno sarà un essere umano, gli strumenti software saranno impiegati nella sua propria costruzione e diffusione\footnote{Notably, come `strumenti' potrebbero alla fine diventare così semplici da non necessitare l'iniziativa dell'essere umano--o gli umani possono diventare occanasionalmente imparziali---che ci potrebbe assere un punto che ci potrebbe essere un punto in cui essi potrebbero giustamente essere considerati agenti autonomi. \eg i contratti possono offire ricompense agli umani per al fine di inviare transazioni per iniziare la loro esecuzione.}. Ci sono due tipi di transazioni: quelle che danno luogo a chiamate di messaggi e quelle che derivano dalla creazione di nuovi account con il codice associato (conosciuto informalmente come `creazione del contratto'). Entrambi i tipi specificano un numero di campi in comune:
+Una transazione (formalmente, $T$) è una singola istruzione, firmata crittograficamente dall'esterno, verso l'ambiente di Ethereum. Mentre si presume che l'ultimo attore esterno sarà un essere umano, gli strumenti software saranno impiegati nella sua propria costruzione e diffusione\footnote{Notably, come `strumenti' potrebbero alla fine diventare così semplici da non necessitare l'iniziativa dell'essere umano--o gli umani possono diventare RIVEDI QUA occanasionalmente imparziali---che si potrebbe arrivare ad un punto in cui essi potrebbero giustamente essere considerati agenti autonomi. \eg i contratti possono offire ricompense agli umani al fine di inviare transazioni per iniziare la loro esecuzione.}. Ci sono due tipi di transazioni: quelle che danno luogo a chiamate di messaggi e quelle che derivano dalla creazione di nuovi account con il codice associato (conosciuto informalmente come `creazione del contratto'). Entrambi i tipi specificano un numero di campi in comune:
 
 \begin{description}
 \item[nonce] Un valore scalare uguale al numero delle transazioni inviate dal mittente; formalmente $T_n$.
@@ -249,12 +249,12 @@ In più, una transazione che crea un contratto:
 \item[init] Un insieme di dati di grandezza illimitata specificando che il codice EVM per la procedura di inizializzazione dell'account, formalmente $T_\mathbf{i}$.
 \end{description}
 
-\textbf{init} è un frammento di codice EVM; esso da come risultato il \textbf{body}, un secondo frammento di codice che viene eseguito ogni volta l'account riceve un messaggio di chiamata (sia attraverso una transazione o per l'esecuzione interna del codice). \textbf{init} è eseguito solo quando l'account è creato ed viene scartato subito dopo.
+\textbf{init} è un frammento di codice EVM; esso dà come risultato il \textbf{body}, un secondo frammento di codice che viene eseguito ogni volta l'account riceve un messaggio di chiamata (sia attraverso una transazione o per l'esecuzione interna del codice). \textbf{init} è eseguito solo quando l'account è creato e viene scartato subito dopo.
 
 Al contrario, una transazione tramite messaggio di chiamata contiene:
 
 \begin{description}
-\item[data] Un insieme di data di grandezza illimitata in byte che specifica i dati di input del messaggio di chiamata, formalmente $T_\mathbf{d}$.
+\item[data] Un insieme di dati, di grandezza illimitata in byte, che specifica i dati di input del messaggio di chiamata, formalmente $T_\mathbf{d}$.
 \end{description}
 
 Appendix \ref{app:signing} specifica la funzione, $S$, che mappa le transazioni del mittente, ed accade attraverso l'ECDSA della curva SECP-256k1, usando l'hash della transazione (eccetto gli ultimi tre campi per la firma) come il dato per firmare. Per adesso noi semplicemente asseriamo che il mittente di una data transazione $T$ può essere rappresentato con $S(T)$.
@@ -279,13 +279,13 @@ where
 \mathbb{P}_n = \{ P: P \in \mathbb{P} \wedge P < 2^n \}
 \end{equation}
 
-L'hash dell'indirizzo $T_\mathbf{t}$ è leggermente diverso: è sia un hash di uni indirizzo a 20-byte address hash o, nel caso sia una transazione che crei un contratto (e quindi formalmente uguale a $\varnothing$), è una serie vuota di dati RLP e perciò il membro di $\mathbb{B}_0$:
+L'hash dell'indirizzo $T_\mathbf{t}$ è leggermente diverso: è sia un hash di un indirizzo a 20-byte o, nel caso sia una transazione che crei un contratto (e quindi formalmente uguale a $\varnothing$), è una serie vuota di dati RLP e perciò il membro di $\mathbb{B}_0$:
 \begin{equation}
 T_t \in \begin{cases} \mathbb{B}_{20} & \text{if} \quad T_t \neq \varnothing \\
 \mathbb{B}_{0} & \text{otherwise}\end{cases}
 \end{equation}
 
-\subsection{The Block} \label{ch:block}
+\subsection{Il Blocco} \label{ch:block}
 
 Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto come il blocco \textit{header}), $H$, insieme con l'informazione corrispondente alle transazioni incluse, $\mathbf{T}$, ed un set delle intestanzioni dell'altro blocco $\mathbf{U}$ che è conosciuto per avere un genitore guale al genitore dell'attuale RIVEDERE QUIthat are known to have a parent equal to the present block's parent's parent RIVEDERE QUI(questi blocchi sono conosciuti come \textit{ommers}\footnote{\textit{ommer} è il più prevalenteis the most prevalent (non dice molto) termine generico neutrale per dire ``fratello del genitore''; si veda \url{http://nonbinary.org/wiki/Gender_neutral_language#Family_Terms}}). L'intestazione del blocco contiene diverse parti di informazione:
 
