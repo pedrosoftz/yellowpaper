@@ -287,34 +287,34 @@ T_t \in \begin{cases} \mathbb{B}_{20} & \text{if} \quad T_t \neq \varnothing \\
 
 \subsection{Il Blocco} \label{ch:block}
 
-Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto come il blocco \textit{header}), $H$, insieme con l'informazione corrispondente alle transazioni incluse, $\mathbf{T}$, ed un set delle intestanzioni dell'altro blocco $\mathbf{U}$ che è conosciuto per avere un genitore guale al genitore dell'attuale RIVEDERE QUIthat are known to have a parent equal to the present block's parent's parent RIVEDERE QUI(questi blocchi sono conosciuti come \textit{ommers}\footnote{\textit{ommer} è il più prevalenteis the most prevalent (non dice molto) termine generico neutrale per dire ``fratello del genitore''; si veda \url{http://nonbinary.org/wiki/Gender_neutral_language#Family_Terms}}). L'intestazione del blocco contiene diverse parti di informazione:
+Il blocco in Ethereum è l'insieme delle componenti di informazione (conosciuto come il blocco \textit{header}), $H$, insieme con l'informazione corrispondente alle transazioni incluse, $\mathbf{T}$, ed un set delle intestanzioni RIVEDI QUA dell'altro blocco $\mathbf{U}$ che è conosciuto per avere un genitore Uguale al genitore dell'attuale RIVEDERE QUIthat are known to have a parent equal to the present block's parent's parent RIVEDERE QUI(questi blocchi sono conosciuti come \textit{ommers}\footnote{\textit{ommer} è il più prevalente (non dice molto) termine generico neutrale per dire ``fratello del genitore''; si veda \url{http://nonbinary.org/wiki/Gender_neutral_language#Family_Terms}}). L'intestazione del blocco contiene diverse parti di informazione:
 
 %\textit{TODO: Introduce logs}
 
 \begin{description}
 \item[parentHash] L'hash Keccak 256-bit dell'intestazione del blocco genitore, nella sua interezza; formalmente $H_p$.
-\item[ommersHash] L'hash Keccak 256-bit hash RIVEDI QUA of the ommers list portion of this block; formally $H_o$.
-\item[beneficiary] L'indirizzo a 160-bit presso cui sono raccolte tutte le commissioni del mining di questo blocco da trasferire; formalmente $H_c$.
+\item[ommersHash] L'hash Keccak 256-bit hash della parte dell'elenco degli ommer di questo blocco; formalmente $H_o$.
+\item[beneficiary] L'indirizzo a 160-bit presso cui sono raccolte tutte le commissioni del mining, di questo blocco, da trasferire; formalmente $H_c$.
 \item[stateRoot] L'hash Keccak 256-bit del nodo madre della struttura dello stato, dopo tutto le transazioni vengono eseguite e applicate le finalizzazioni; formalmente $H_r$.
-\item[transactionsRoot] L'hash 256-bit del nodo alla radice della struttura hash al cui interno ci sono immaganizzati ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_t$.
+\item[transactionsRoot] L'hash 256-bit del nodo alla radice della struttura hash al cui interno sono immagazzinate ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_t$.
 \item[receiptsRoot] L'hash Keccak 256-bit del nodo alla radice della struttura con le ricevute di ogni transazione nella porzione della lista delle transazioni del blocco; formalmente $H_e$.
 \item[logsBloom] Il filtro Bloom composto da informazioni indicizzabili (l'indirizzo del logger ed i log topics) contenuto in ogni log entry dalla ricevuta di ogni transazione nella lista delle transazioni; formalmente $H_b$.
 \item[difficulty] Un valore scalare corrispondente al livello di difficoltà di questo blocco. Questo può essere calcolato dal livello di difficoltà del precedente blocco e dalla marca temporale; formalmente $H_d$.
 \item[number] Un valore scalare uguale al numero dei blocchi antenati. Il blocco di genesi ne ha un numero pari a zero; formalmente $H_i$.
 \item[gasLimit] Un valore scalare uguale al limite di spesa del gas per blocco; formalmente $H_l$.
 \item[gasUsed] Un valore scalare uguale al gas totale usato nelle transazioni di questo blocco; formalmente $H_g$.
-\item[timestamp] Un valore scalare uguale al ragionevole tempo() di outpout di Unix alla nascita di questo blocco; formalmente $H_s$.
-\item[extraData] Un insieme di dati arbitrario contenete dati rilevanti per questo blocco. Questo deve essere di 32 bytes o meno; formalmente $H_x$.
-\item[mixHash] Un hash a 256-bit che prova che hash che dimostra insieme al nonce che un sufficiente ammontare di computazione è stato convogliato per mezzo di questo blocco; formalmente $H_m$.
-\item[nonce] Un hash a 64-bit che dimostra che insieme con il mix-hash, che un ammontare sufficiente di computazione è stato convogliato per mezzo di questo blocco; formalmente $H_n$.
+\item[timestamp] Un valore scalare uguale al tempo ragionevole () di outpout di Unix alla nascita di questo blocco; formalmente $H_s$.
+\item[extraData] Un insieme di dati arbitrario contenente dati rilevanti per questo blocco. Questo deve essere di 32 bytes o meno; formalmente $H_x$.
+\item[mixHash] Un hash a 256-bit che dimostra, insieme al nonce, che un sufficiente ammontare di computazione è stato convogliato per mezzo di questo blocco; formalmente $H_m$.
+\item[nonce] Un hash a 64-bit che dimostra, insieme con il mix-hash, che un ammontare sufficiente di computazione è stato convogliato per mezzo di questo blocco; formalmente $H_n$.
 \end{description}
 
-Gli altri due componenti nel blocco sono semplicemente una lista di intestazioni di blocchi OMMER RIVEDERE QUA (dello stesso formato di cui sopra) e una serie di transazioni. Formalmente, siamo in grado di fare riferimento ad un blocco $B$:
+Gli altri due componenti nel blocco sono semplicemente una lista di intestazioni di blocchi ommer (dello stesso formato di cui sopra) e una serie di transazioni. Formalmente, siamo in grado di fare riferimento ad un blocco $B$:
 \begin{equation}
 B \equiv (B_H, B_\mathbf{T}, B_\mathbf{U})
 \end{equation}
 
-\subsubsection{Transaction Receipt}
+\subsubsection{Ricevuta della Transazione}
 
 Con il fine di codificare l'informazione circa ad una transazione, riguardo alla quale può essere utile costituire una prova a conoscenza zero, o indice e ricerca, codifichiamo una ricevuta di ogni transazione contenente certe informazioni che attengono la propria esecuzione. Ogni ricevuta, indicata $B_\mathbf{R}[i]$ per la $i$th transaction) è posizionata in una struttura a indice e chiave e la struttura base viene memorizzata nell'intestazione come $H_e$.
 
