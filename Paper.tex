@@ -388,7 +388,7 @@ I valori derivanti dalla computazione delle transazioni, specificatamente dalle 
 
 \subsubsection{Serializzazione}
 
-Le funzioni $L_B$ e $L_H$ sono quelle preparatorie rispettivamente per un blocco e per l'intestazione di un blocco. In maniera del tutto simile la funzione di preparazione della ricevuta della transazione $L_R$, sosteniamo i tipi e l'ordine della struttura per quando la trasformazione RLP è richiesta:
+Le funzioni $L_B$ e $L_H$ sono quelle preparatorie riguardo ad un blocco e all'intestazione di un blocco. In maniera del tutto simile la funzione di preparazione della ricevuta della transazione $L_R$, sosteniamo i tipi e l'ordine della struttura per quando è richiesta la trasformazione RLP:
 \begin{eqnarray}
 \quad L_H(H) & \equiv & (\begin{array}[t]{l}H_p, H_o, H_c, H_r, H_t, H_e, H_b, H_d,\\ H_i, H_l, H_g, H_s, H_x, H_m, H_n \; )\end{array} \\
 \quad L_B(B) & \equiv & \big( L_H(B_H), L_T^*(B_\mathbf{T}), L_H^*(B_\mathbf{U}) \big)
