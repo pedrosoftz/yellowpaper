@@ -318,12 +318,12 @@ B \equiv (B_H, B_\mathbf{T}, B_\mathbf{U})
 
 Con il fine di codificare l'informazione di una transazione, riguardo alla quale può essere utile costituire una prova RIGUARDA QUIa conoscenza zero, o indice e ricerca, codifichiamo una ricevuta di ogni transazione contenente certe informazioni che attengono la propria esecuzione. Ogni ricevuta, indicata $B_\mathbf{R}[i]$ per la $i$th transaction) è posizionata in una struttura a indice e chiave e la struttura base viene memorizzata nell'intestazione come $H_e$.
 
-La ricevuta della transazione è un insieme di dati di quattro oggetti compreso lo stato successivo la transazione, $R_{\boldsymbol{\sigma}}$, il gas complessivo usato nel blocco che contiene la ricevuta della transazione nel momento immediatamente successivo a quello in cui la transazione avviene $R_u$, il set di log creato attraverso l'esecuzione della transazione, $R_\mathbf{l}$ ed il filtro Bloom formato attraverso le informazioni in quei logs, $R_b$:
+La ricevuta della transazione è un insieme di dati di quattro oggetti compreso lo stato successivo, la transazione, $R_{\boldsymbol{\sigma}}$, il gas complessivo usato nel blocco, che contiene la ricevuta della transazione nel momento immediatamente successivo a quello in cui la transazione avviene $R_u$, il set di log creato attraverso l'esecuzione della transazione, $R_\mathbf{l}$ ed il filtro Bloom formato attraverso le informazioni in quei logs, $R_b$:
 \begin{equation}
 R \equiv (R_{\boldsymbol{\sigma}}, R_u, R_b, R_\mathbf{l})
 \end{equation}
 
-La funzione $L_R$ prepara semplicemente una ricveuta della transazione per essere trasformata in un insieme di dati serializzati in byte RLP:
+La funzione $L_R$ prepara semplicemente una ricevuta della transazione per essere trasformata in un insieme di dati serializzati in byte RLP:
 \begin{equation}
 L_R(R) \equiv (\mathtt{\small TRIE}(L_S(R_{\boldsymbol{\sigma}})), R_u, R_b, R_\mathbf{l})
 \end{equation}
@@ -388,7 +388,7 @@ I valori derivanti dalla computazione delle transazioni, specificatamente dalle 
 
 \subsubsection{Serializzazione}
 
-Le funzioni $L_B$ e $L_H$ sono quelle preparatorie riguardo ad un blocco e all'intestazione di un blocco. In maniera del tutto simile la funzione di preparazione della ricevuta della transazione $L_R$, sosteniamo i tipi e l'ordine della struttura per quando è richiesta la trasformazione RLP:
+Le funzioni $L_B$ e $L_H$ sono quelle preparatorie riguardo ad un blocco e all'intestazione di un blocco. In maniera del tutto simile la funzione di preparazione della ricevuta della transazione $L_R$, RIVEDI QUA sosteniamo i tipi e l'ordine della struttura per quando è richiesta la trasformazione RLP:
 \begin{eqnarray}
 \quad L_H(H) & \equiv & (\begin{array}[t]{l}H_p, H_o, H_c, H_r, H_t, H_e, H_b, H_d,\\ H_i, H_l, H_g, H_s, H_x, H_m, H_n \; )\end{array} \\
 \quad L_B(B) & \equiv & \big( L_H(B_H), L_T^*(B_\mathbf{T}), L_H^*(B_\mathbf{U}) \big)
@@ -482,7 +482,7 @@ where $(n, m) = \mathtt{PoW}(H_{\hcancel{n}}, H_n, \mathbf{d})$
 
 E' sufficiente che \textbf{extraData} contenga almeno 32 byte.
 
-\section{Gas and Payment} \label{ch:payment}
+\section{Gas e Pagamento} \label{ch:payment}
 
 Con il fine di evitare problemi relativi all'abuso del network e per aggirare le inevitabili conseguenze della completezza di Turing, tutta la computazione programmabile in Ethereum è soggetta alla fee. Il tariffario è specificato in unità di \textit{gas} (see Appendix \ref{app:fees} per le fee associate con le diverse computazioni. Perciò ogni dato frammento di computazione programmabile (questo include la creazione di contratti, fare messaggi di chiamata, utilizzando ed accedendo all'account di storage ed eseguendo operazioni sulla macchina virtuale) ha un costo universalmente accettato in termi di gas.
 
