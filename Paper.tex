@@ -612,9 +612,9 @@ Questi sono usati per aiutare a definire la ricevuta della transazione, discussa
 %\boldsymbol{\sigma}'[s]_b & \equiv & \boldsymbol{\sigma}_P[s]_b + g
 %\end{eqnarray}
 
-\section{Contract Creation} \label{ch:create}
+\section{Creazione del Contratto} \label{ch:create}
 
-C'è un numero di parametri intrinseci impiegati quando viene creato un account: mittente ($s$), colui che effettua per primo la transazione ($o$), gas disponibile ($g$), prezzo del gas ($p$), dotazione ($v$) insieme con un insieme di dati di lungherzza arbitraria, $\mathbf{i}$, il codice EVM di inizializzazione ed infine la profondità attuale dello stack del messaggio di chiamata/creazione del contratto ($e$).
+C'è un numero di parametri intrinseci impiegati quando viene creato un account: mittente ($s$), colui che effettua per primo la transazione ($o$), gas disponibile ($g$), prezzo del gas ($p$), dotazione ($v$) insieme con un insieme di dati di lunghezza arbitraria, $\mathbf{i}$, il codice EVM di inizializzazione ed infine la profondità attuale dello stack del messaggio di chiamata/creazione del contratto ($e$).
 
 Definiamo la funzione di creazione formalmente come la funzione $\Lambda$, che fa una stima da questi valori, insieme con lo stato $\boldsymbol{\sigma}$ verso l'insieme di dati che contiene il nuovo stato, il restante gas e il maturato sottotostato della transazione $(\boldsymbol{\sigma}', g', A)$, come in sezione \ref{ch:transactions}:
 \begin{equation}
@@ -626,9 +626,9 @@ L'indirizzo del nuovo account è definito come essere più a festra di 160 bits 
 a \equiv \mathcal{B}_{96..255}\Big(\mathtt{\tiny KEC}\Big(\mathtt{\tiny RLP}\big(\;(s, \boldsymbol{\sigma}[s]_n - 1)\;\big)\Big)\Big)
 \end{equation}
 
-dove $\mathtt{\tiny KEC}$ è la funzione di hash Keccak 256-bit, $\mathtt{\tiny RLP}$ è la funzione di codifica RLP, $\mathcal{B}_{a..b}(X)$ stima il valore binario contenete i bit degli indici nel range $[a, b]$ dei dati binari $X$ and $\boldsymbol{\sigma}[x]$ è l'indirizzo stato di $x$ or $\varnothing$ se nessuno esiste. Si noti che impieghiamo un valore minore rispetto a quello del nonce del mittente; asseriamo che abbiamo incrementato il nonce dell'account del mittente prima di questa chiamata, e così il valore impiegato nel nonce del mittente all'inizio della transazione che ha dato inizio o dell'operazione VM.
+dove $\mathtt{\tiny KEC}$ è la funzione di hash Keccak 256-bit, $\mathtt{\tiny RLP}$ è la funzione di codifica RLP, $\mathcal{B}_{a..b}(X)$ stima il valore binario contenete i bit degli indici nel range $[a, b]$ dei dati binari $X$ and $\boldsymbol{\sigma}[x]$ è l'indirizzo stato di $x$ o $\varnothing$ se non esiste niente. Si noti che impieghiamo un valore minore rispetto a quello del nonce del mittente; asseriamo che abbiamo incrementato il nonce dell'account del mittente prima di questa chiamata, e così il valore impiegato nel nonce del mittente all'inizio della transazione originaria o dell'operazione VM.
 
-Il nonce dell'account è inizialmente impostato a zero, il saldoThe account's nonce is initially defined as zero, il saldo come il valore passato, lo storage come vuoto e l'hash del codice come hash Keccak 256-bit della stringa vuota; il salndo del mittente è anche ridotto dal valore passato. Quindi lo stato mutato diventa $\boldsymbol{\sigma}^*$:
+Il nonce dell'account è inizialmente impostato a zero, il saldo come il valore passato, lo storage come vuoto e l'hash del codice come hash Keccak 256-bit della stringa vuota; il saldo del mittente è anche ridotto dal valore passato. Quindi lo stato mutato diventa $\boldsymbol{\sigma}^*$:
 \begin{equation}
 \boldsymbol{\sigma}^* \equiv \boldsymbol{\sigma} \quad \text{except:}
 \end{equation}
@@ -647,11 +647,11 @@ v' \equiv \begin{cases}
 
 %It is asserted that the state database will also change such that it defines the pair $(\mathtt{\tiny KEC}(\mathbf{b}), \mathbf{b})$.
 
-Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di escuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, ulteriori account possono essere creati e fatti altri messaggi di chiamata. In quanto tale, la funzione di esecuzione del codice $\Xi$ restituisce un insieme di dati dello stato risultante $\boldsymbol{\sigma}^{**}$, del gas disponibile rimanente $g^{**}$, il sottostato maturato $A$ ed il codice corpo dell'account $\mathbf{b}$.
+Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di escuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire nei confronti di diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, ulteriori account possono essere creati e fatti altri messaggi di chiamata. In quanto tale, la funzione di esecuzione del codice $\Xi$ restituisce un insieme di dati dello stato risultante $\boldsymbol{\sigma}^{**}$, del gas disponibile rimanente $g^{**}$, il sottostato maturato $A$ ed il codice corpo dell'account $\mathbf{b}$.
 
-L'esecuzione del codice esaurisce il gas; quindi esso può uscire prima che il codice è giunto ad uno stato naturale di arresto. In questo (e diversi altri) casi eccezionali possiamo affermare che è avvenuta un eccezzione di Fine-del-gas: Lo stato valutato è definito come un set vuoto $\varnothing$ e l'intera operazione di creazione non dovrebbe avere effetto sullo stato, effettivamente lasciandolo così com'è immediatamente prima di tentare la creazione. Il gas rimanete dovrebbe essere zero in tali eccezionali condizioni. RIVEDI QUA Se la creazione fosse eseguita come la ricezione di una transazione, poi questo non influenzerebbe il pagamento del costo intrinseco: esso è pagato indipendentemente.
+L'esecuzione del codice esaurisce il gas; quindi esso può uscire prima che il codice sia giunto ad uno stato naturale di arresto. In questo (e diversi altri) casi eccezionali possiamo affermare che è avvenuta un eccezione di Fine-del-gas: lo stato valutato è definito come un set vuoto $\varnothing$ e l'intera operazione di creazione non dovrebbe avere effetto sullo stato, effettivamente lasciandolo così com'è immediatamente prima di tentare la creazione. In tali eccezionali condizioni il gas rimanente dovrebbe essere zero. RIVEDI QUA Se la creazione fosse eseguita come la ricezione di una transazione, poi questo non influenzerebbe il pagamento del costo intrinseco: esso è pagato indipendentemente.
 
-Se tale eccezione non si verifica, quindi il gas rimanente è rimborsato al mittente e lo stato ormai alterato può perdurare. Perciò formalmente, possiamo specificare lo stato risultante, gas e sottostato come $(\boldsymbol{\sigma}', g', A)$ dove:
+Se tale eccezione non si verifica, successivamente il gas rimanente è rimborsato al mittente e lo stato ormai alterato può perdurare. Perciò formalmente, possiamo specificare lo stato risultante, gas e sottostato come $(\boldsymbol{\sigma}', g', A)$ dove:
 
 \begin{equation}
 (\boldsymbol{\sigma}^{**}, g^{**}, A, \mathbf{o}) \equiv \Xi(\boldsymbol{\sigma}^*, g, I) \\
@@ -686,7 +686,7 @@ dove $c$ è il costo del codice di deposito:
 c \equiv G_{codedeposit} \times |\mathbf{o}|
 \end{equation}
 
-$I_\mathbf{d}$ restituisce l'insieme di dati vuoto in quanto non vi sono dati di input a questa chiamata. $I_H$ non ha uno speciale trattamente ed è determinato dalla blockchain. L'eccezione nella determinazione di $\boldsymbol{\sigma}'$ impone che la sequenza di byte risultante dall'esecuzione del codice di inizializzazione spefica il codice finale del corpo per l'account di nuova creazione, con $\boldsymbol{\sigma}'[a]_c$ che è l'hash Keccak 256-bit del codice corpo dell'account di nuova creazione e $\mathbf{o}$ la sequenza di byte output dell'esecuzione del codice.
+$I_\mathbf{d}$ restituisce l'insieme di dati vuoto in quanto non vi sono dati di input a questa chiamata. $I_H$ non ha uno speciale trattamento ed è determinato dalla blockchain. L'eccezione nella determinazione di $\boldsymbol{\sigma}'$ impone che la sequenza di byte risultante dall'esecuzione del codice di inizializzazione spefichi il codice finale del corpo per l'account di nuova creazione, con $\boldsymbol{\sigma}'[a]_c$ che è l'hash Keccak 256-bit del codice corpo dell'account di nuova creazione e $\mathbf{o}$ la sequenza di byte output dell'esecuzione del codice.
 
 Nessun codice è inserito nello stato se il gas non compra la fee di deposito aggiuntiva per byte, comunque, il valore è ancora trasferito e gli effetti collaterali dell'esecuzione hanno corso.
 
