@@ -492,9 +492,9 @@ In generale, l'Ether impiegato per acquistare il gas, che non è rimborsabile, �
 
 %\subsubsection{Determining Computation Costs}
 
-\section{Transaction Execution} \label{ch:transactions}
+\section{Esecuzione della Transazione} \label{ch:transactions}
 
-L'esecuzione di una transazione è la parte più complessa del protocollo Ethereum: essa definisce la funzione di transizione di stato $\Upsilon$. Si presume che qualsiasi transazioni eseguita superi i test iniziali di validità intrinseca. Questi includono:
+L'esecuzione di una transazione è la parte più complessa del protocollo Ethereum: essa definisce la funzione di transizione di stato $\Upsilon$. Si presume che qualsiasi transazione eseguita superi i test iniziali di validità intrinseca. Questi includono:
 
 \begin{enumerate}
 \item La transazione è un RLP ben strutturata, con nessun ulteriore byte;
@@ -511,7 +511,7 @@ Formalmente, consideriamo la funzione $\Upsilon$, con $T$ che è una transazione
 
 Quindi $\boldsymbol{\sigma}'$ è lo stato successivo alla transazione. Definiamo anche $\Upsilon^g$ per valutare l'ammontare di gas usato nell'esecuzione di una transazione e $\Upsilon^\mathbf{l}$ per stimare gli oggetti accumalati nel log della transazione, entrambi definiti successivamente.
 
-\subsection{Substate}
+\subsection{Substato}
 Attraverso l'escuzione della transazione, noi accomuliamo certe informazioni RIVEDI QUA that is acted upon immediately following the transaction. Chiamiamo questo \textit{transaction substate}, e rappresentiamo questo come $A$, che è un insieme di dati:
 \begin{equation}
 A \equiv (A_\mathbf{s}, A_\mathbf{l}, A_r)
@@ -524,7 +524,7 @@ Per brevità, definiamo il sottostato vuoto $A^0$ non avere suicidi, nessun log 
 A^0 \equiv (\varnothing, (), 0)
 \end{equation}
 
-\subsection{Execution}
+\subsection{Esecuzione}
 Definiamo il gas intrinseco $g_0$, l'ammontare di gas che questa transazione richiede di versare prima dell'esecuzione, come segue:
 \begin{equation}
 g_0 \equiv \sum_{i \in T_\mathbf{i}, T_\mathbf{d}} \begin{cases} G_{txdatazero} & \text{if} \quad i = 0 \\ G_{txdatanonzero} & \text{otherwise} \end{cases} + G_{transaction}\\
@@ -647,7 +647,7 @@ v' \equiv \begin{cases}
 
 %It is asserted that the state database will also change such that it defines the pair $(\mathtt{\tiny KEC}(\mathbf{b}), \mathbf{b})$.
 
-Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di escuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire nei confronti di diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, ulteriori account possono essere creati e fatti altri messaggi di chiamata. In quanto tale, la funzione di esecuzione del codice $\Xi$ restituisce un insieme di dati dello stato risultante $\boldsymbol{\sigma}^{**}$, del gas disponibile rimanente $g^{**}$, il sottostato maturato $A$ ed il codice corpo dell'account $\mathbf{b}$.
+Infine, l'account è inizializzato attraverso l'esecuzione del codice EVM di inizializzazione $\mathbf{i}$ in accordo al modello di esecuzione (si veda la sezione \ref{ch:model}). L'esecuzione del codice può influire nei confronti di diversi eventi che non sono all'interno dello stato di esecuzione: lo storage dell'account può essere alterato, ulteriori account possono essere creati e fatti altri messaggi di chiamata. In quanto tale, la funzione di esecuzione del codice $\Xi$ restituisce un insieme di dati dello stato risultante $\boldsymbol{\sigma}^{**}$, del gas disponibile rimanente $g^{**}$, il sottostato maturato $A$ ed il codice corpo dell'account $\mathbf{b}$.
 
 L'esecuzione del codice esaurisce il gas; quindi esso può uscire prima che il codice sia giunto ad uno stato naturale di arresto. In questo (e diversi altri) casi eccezionali possiamo affermare che è avvenuta un eccezione di Fine-del-gas: lo stato valutato è definito come un set vuoto $\varnothing$ e l'intera operazione di creazione non dovrebbe avere effetto sullo stato, effettivamente lasciandolo così com'è immediatamente prima di tentare la creazione. In tali eccezionali condizioni il gas rimanente dovrebbe essere zero. RIVEDI QUA Se la creazione fosse eseguita come la ricezione di una transazione, poi questo non influenzerebbe il pagamento del costo intrinseco: esso è pagato indipendentemente.
 
