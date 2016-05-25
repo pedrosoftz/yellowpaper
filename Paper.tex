@@ -820,9 +820,9 @@ Il modello di esecuzione definisce la funzione $\Xi$, che può calcolare lo stat
 (\boldsymbol{\sigma}', g', \mathbf{s}, \mathbf{l}, r, \mathbf{o}) \equiv \Xi(\boldsymbol{\sigma}, g, I)
 \end{equation}
 
-\subsection{Execution Overview}
+\subsection{Panoramica sull'Esecuzione}
 
-Dobbiamo definire la funzione $\Xi$ . Nella maggior parte delle implementazioni pratiche questa dovrà essere modellata come una progressione iterativa della coppia che comprende lo stato completo del sistema, $\boldsymbol{\sigma}$ e dello stato della macchina, $\boldsymbol{\mu}$. Formalmente, lo definiamo ricorsivamente con una funzione $X$. Questo impiega una funzione iterativa $O$ (che definisce il risultato di un singolo cicolo dello stato della macchina) insieme con le funzioni $Z$ which che determinano se l'attuale stato è un stato di arresto eccezionale della macchina e $H$, specificando i dati di output dell'istruzione se e solo se lo stato presente è uno normale di arresto della macchina.
+Dobbiamo definire la funzione $\Xi$ . Nella maggior parte delle implementazioni pratiche questa dovrà essere modellata come una progressione iterativa della coppia che comprende lo stato completo del sistema, $\boldsymbol{\sigma}$ e dello stato della macchina, $\boldsymbol{\mu}$. Formalmente, lo definiamo ricorsivamente con una funzione $X$. Questo impiega una funzione iterativa $O$ (che definisce il risultato di un singolo ciclo dello stato della macchina) insieme con le funzioni $Z$ che determinano se l'attuale stato sia un stato di arresto eccezionale della macchina e $H$, specificando i dati di output dell'istruzione se e solo se lo stato presente è uno normale di arresto della macchina.
 
 La sequenza vuota, denota $()$, non è uguale al set vuoto, indicato $\varnothing$; questo è importante quanto si interpreta l' output di $H$, che esamina $\varnothing$ quando l'esecuzione continuna ma una serie (potenzialmente vuota) quando l'esecuzione dovrebbe arrestarsit.
 \begin{eqnarray}
@@ -849,10 +849,10 @@ dove
 
 Si noti che dobbiamo lasciare il quarto valore nell'insieme di dati restituito da $X$ per valutare correttamente $\Xi$, quindi il pedice $X_{0,1,2,4}$.
 
-$X$ è perciò superato un ciclo (qui ricorsivamente, ma le implementazioni sono in generale previste per essere utilizzati in un semplice loop iterativo) fino a quando $Z$ diventano vero indicando che lo stato attuale è eccezionale e che la macchina deve essere arrestata e qualsiasi cambiamento scartato o finchè $H$ diviene una serie (piuttosto che un set vuoto) indicando che la macchina ha raggiunto un halt controllato.
+$X$ è perciò superato un ciclo (qui ricorsivamente, ma le implementazioni sono in generale previste per essere utilizzati in un semplice loop iterativo) fino a quando $Z$ diventano vero indicando che lo stato attuale è eccezionale e che la macchina deve essere arrestata e qualsiasi cambiamento scartato, o finchè $H$ diviene una serie (piuttosto che un set vuoto) indicando che la macchina ha raggiunto uno stop controllato.
 
-\subsubsection{Machine State}
-La macchina stato $\boldsymbol{\mu}$ è definita come un insieme di dati $(g, pc, \mathbf{m}, i, \mathbf{s})$ che sono il gas disponibile, il programma contatore $pc \in \mathbb{P}_{256}$ , il contenuto della memoria, il numero attivo di parole nella memotia (che contano continuamente dalla posizione 0), e i contenuti dello stack. I contenuti della memoria $\boldsymbol{\mu}_\mathbf{m}$ sono una seie di zere di grandezza $2^{256}$.
+\subsubsection{Lo Stato della Macchina}
+Lo Stato della Macchina $\boldsymbol{\mu}$ è definito come un insieme di dati $(g, pc, \mathbf{m}, i, \mathbf{s})$ che sono il gas disponibile, il programma contatore $pc \in \mathbb{P}_{256}$ , il contenuto della memoria, il numero attivo di parole nella memoria (che contano continuamente dalla posizione 0), e i contenuti dello stack. I contenuti della memoria $\boldsymbol{\mu}_\mathbf{m}$ sono una seie di zere di grandezza $2^{256}$.
 
 Per facilitare la lettura, le istruzioni mnemoniche, scritte in maiuscoletto (\eg \space {\small ADD}), dovrebbero essere interpretate come i loro equivalenti numerici; la tabella completa di istruzioni e le loro specifiche sono date in Appendix \ref{app:vm}.
 
@@ -865,7 +865,7 @@ w \equiv \begin{cases} I_\mathbf{b}[\boldsymbol{\mu}_{pc}] & \text{if} \quad \bo
 
 Noi assumiamo anche gli ammontari fissi di $\mathbf{\delta}$ e $\mathbf{\alpha}$, specificando che gli oggetti dello stack rimossi ed aggiunti, RIVEDI QUAboth subscriptable on the instruction and an instruction cost function $C$ evaluating to the full cost, in gas, of executing the given instruction.
 
-\subsubsection{Exceptional Halting}
+\subsubsection{Arresto Eccezionale}
 
 La funzione di arresto eccezionale $Z$ è definita come:
 \begin{equation}
@@ -881,7 +881,7 @@ Z(\boldsymbol{\sigma}, \boldsymbol{\mu}, I) \equiv
 
 Questi stati dove l'esecuzione si trova in uno stato di arresto eccezionale se c'è un gas insufficiente, se l'istruzione è invalida (e quindi il suo $\delta$ pedice è indefinito), se ci sono oggetti stack insufficienti, se una {\small JUMP}/{\small JUMPI} destinazione è invalida o la grandezza del nuovo stack sarebbe più grande di 1024. Il lettore attento realizzerà che questo implica che nessuna istruzione può, attraverso la propria esecuzione, causare un arresto eccezionale.
 
-\subsubsection{Jump Destination Validity}
+\subsubsection{La Validità della Destinazione del Salto}
 
 Abbiamo impiegato in precedenza $D$ come la funzione per determinare il set di un salto valido di destinazioni dato il codice che  è in esecuzione. Definiamo questo come qualsiasi posizione nel codice occupato da una istruzione {\small JUMPDEST}.
 
@@ -901,7 +901,7 @@ D_J(\mathbf{c}, N(i, \mathbf{c}[i])) & \text{otherwise} \\
 \end{cases}
 \end{equation}
 
-dove $N$ è la prossima posizione dell'istruzione valida nel codicee, saltando i dati di un {\small PUSH} istruzione, se qualsiasi:
+dove $N$ è la prossima posizione dell'istruzione valida nel codice, saltando i dati di un {\small PUSH} istruzione, se qualsiasi:
 \begin{equation}
 N(i, w) \equiv \begin{cases}
 i + w - \text{\small PUSH1} + 2 & \text{if} \quad w \in [\text{\small PUSH1}, \text{\small PUSH32}] \\
@@ -921,7 +921,7 @@ H_{\text{\tiny RETURN}}(\boldsymbol{\mu}) & \text{if} \quad w = \text{\small RET
 
 L'operazione di arresto del ritorno dei dati, \text{\small RETURN}, ha una funzione speciale $H_{\text{\tiny RETURN}}$, definita in Appendix \ref{app:vm}.
 
-\subsection{The Execution Cycle}
+\subsection{Il Ciclo di Esecuzione}
 
 Gli oggetti dello stack sono aggiunti o rimossi dalla porzione più a sinistra ed inferiormente indicizzata delle serie; tutti gli altri oggetti rimangono inalterati:
 \begin{eqnarray}
